@@ -155,14 +155,6 @@
 			<version>${org.springframework.data-jpa.version}</version>
 		</dependency>
 
-		<!-- spring test mvc -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test-mvc</artifactId>
-			<version>1.0.0.BUILD-SNAPSHOT</version>
-			<scope>test</scope>
-		</dependency>
-
 		<!-- hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>

@@ -1,4 +1,4 @@
-package me.dec7.mark.config.mark;
+package me.dec7.marker.config.marker;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

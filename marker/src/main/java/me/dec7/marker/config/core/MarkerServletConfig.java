@@ -1,4 +1,4 @@
-package me.dec7.mark.config.core;
+package me.dec7.marker.config.core;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,7 +13,7 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages={"**.controller"})
-public class MarkServletConfig extends WebMvcConfigurerAdapter {
+public class MarkerServletConfig extends WebMvcConfigurerAdapter {
 
 	@Bean
 	public ViewResolver viewResolver() {

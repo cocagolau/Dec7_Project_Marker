@@ -1,10 +1,10 @@
-package me.dec7.mark.config.core;
+package me.dec7.marker.config.core;
 
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
 
-import me.dec7.mark.config.mark.MarkConfig;
+import me.dec7.marker.config.marker.MarkerConfig;
 
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
@@ -13,11 +13,11 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 
-public class MarkInitializer implements WebApplicationInitializer {
+public class MarkerInitializer implements WebApplicationInitializer {
 	
 	private static final String ALL = "/*";
 	private static final String ROOT = "/";
-	private static final String MARK = "mark";
+	private static final String MARKER = "marker";
 	private static final String UTF8 = "UTF-8";
 	private static final String TRUE = "true";
 
@@ -25,17 +25,17 @@ public class MarkInitializer implements WebApplicationInitializer {
 	public void onStartup(ServletContext container) {
 		// spring application context
 		AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-		rootContext.register(MarkConfig.class);
+		rootContext.register(MarkerConfig.class);
 
 		// root application context 라이프사이클 관리
 		container.addListener(new ContextLoaderListener(rootContext));
 
 		// spring application context의 dispatcher servlet
 		AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();
-		dispatcherContext.register(MarkServletConfig.class);
+		dispatcherContext.register(MarkerServletConfig.class);
 
 		// dispatcher servlet 등록
-		ServletRegistration.Dynamic dispatcher = container.addServlet(MARK, new DispatcherServlet(dispatcherContext));
+		ServletRegistration.Dynamic dispatcher = container.addServlet(MARKER, new DispatcherServlet(dispatcherContext));
 		dispatcher.setLoadOnStartup(1);
 		dispatcher.addMapping(ROOT);
 		dispatcher.setInitParameter("throwExceptionIfNoHandlerFound", TRUE);
