@@ -1,0 +1,89 @@
+package me.dec7.mark.config.mark;
+
+import java.util.Properties;
+
+import javax.annotation.Resource;
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
+
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+@Configuration
+@PropertySource(value = "classpath:application-properties.xml")
+@EnableJpaRepositories(basePackages = {"me.dec7.mark.persistence"})
+@EnableTransactionManagement
+public class PersistenceConfig {
+
+	private static final String PERSISTENCE_PACKAGE = "me.dec7.mark.persistence";
+	private static final String HIBERNATE_CACHE_USE_QUERY_CACHE = "hibernate.cache.use_query_cache";
+	private static final String HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = "hibernate.cache.use_second_level_cache";
+	private static final String HIBERNATE_CACHE_REGION_FACTORY_CLASS = "hibernate.cache.region.factory_class";
+	
+	private static final String HIBERNATE_FORMAT_SQL = "hibernate.format_sql";
+	private static final String HIBERNATE_SHOW_SQL = "hibernate.show_sql";
+	private static final String HIBERNATE_EJB_NAMING_STRATEGY = "hibernate.ejb.naming_strategy";
+	private static final String HIBERNATE_HBM2DDL_AUTO = "hibernate.hbm2ddl.auto";
+	private static final String HIBERNATE_DIALECT = "hibernate.dialect";
+	private static final String HIBERNATE_GENERATE_STATISTICS = "hibernate.generate_statistics";
+
+	private static final String DATABASE_PASSWORD = "database.password";
+	private static final String DATABASE_USERNAME = "database.username";
+	private static final String DATABASE_URL = "database.url";
+	private static final String DATABASE_DRIVER_CLASS_NAME = "database.driverClassName";
+
+	@Resource
+	private Environment env;
+
+	@Bean
+	DataSource dataSource() {
+		BasicDataSource dataSource = new BasicDataSource();
+		dataSource.setDriverClassName(env.getRequiredProperty(DATABASE_DRIVER_CLASS_NAME));
+		dataSource.setUrl(env.getRequiredProperty(DATABASE_URL));
+		dataSource.setUsername(env.getRequiredProperty(DATABASE_USERNAME));
+		dataSource.setPassword(env.getRequiredProperty(DATABASE_PASSWORD));
+
+		return dataSource;
+	}
+
+	@Bean
+	JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+		JpaTransactionManager transactionManager = new JpaTransactionManager();
+		transactionManager.setEntityManagerFactory(entityManagerFactory);
+
+		return transactionManager;
+	}
+
+	@Bean
+	LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
+		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+		entityManagerFactoryBean.setDataSource(dataSource);
+		entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+		entityManagerFactoryBean.setPackagesToScan(PERSISTENCE_PACKAGE);
+
+		Properties jpaProperties = new Properties();
+		jpaProperties.put(HIBERNATE_DIALECT, env.getRequiredProperty(HIBERNATE_DIALECT));
+		jpaProperties.put(HIBERNATE_HBM2DDL_AUTO, env.getRequiredProperty(HIBERNATE_HBM2DDL_AUTO));
+		jpaProperties.put(HIBERNATE_EJB_NAMING_STRATEGY, env.getRequiredProperty(HIBERNATE_EJB_NAMING_STRATEGY));
+		jpaProperties.put(HIBERNATE_SHOW_SQL, env.getRequiredProperty(HIBERNATE_SHOW_SQL));
+		jpaProperties.put(HIBERNATE_FORMAT_SQL, env.getRequiredProperty(HIBERNATE_FORMAT_SQL));
+		jpaProperties.put(HIBERNATE_GENERATE_STATISTICS, env.getRequiredProperty(HIBERNATE_GENERATE_STATISTICS));
+		
+		jpaProperties.put(HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE, env.getRequiredProperty(HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
+		jpaProperties.put(HIBERNATE_CACHE_REGION_FACTORY_CLASS, env.getRequiredProperty(HIBERNATE_CACHE_REGION_FACTORY_CLASS));
+		jpaProperties.put(HIBERNATE_CACHE_USE_QUERY_CACHE, env.getRequiredProperty(HIBERNATE_CACHE_USE_QUERY_CACHE));
+
+		entityManagerFactoryBean.setJpaProperties(jpaProperties);
+
+		return entityManagerFactoryBean;
+	}
+
+}

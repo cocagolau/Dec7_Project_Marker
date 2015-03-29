@@ -1,0 +1,264 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>me.dec7</groupId>
+	<artifactId>marker</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Marker Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<ch.qos.logback.version>1.1.3</ch.qos.logback.version>
+		<junit.version>4.12</junit.version>
+		<org.mockito.version>1.10.8</org.mockito.version>
+
+		<mysql.connector.version>5.1.30</mysql.connector.version>
+		<org.apache.commons.dbcp2.version>2.0.1</org.apache.commons.dbcp2.version>
+		<com.h2database.version>1.1.102</com.h2database.version>
+
+		<org.springframework.version>4.1.5.RELEASE</org.springframework.version>
+		<org.springframework.social.version>1.1.0.RELEASE</org.springframework.social.version>
+		<org.springframework.security.version>3.2.6.RELEASE</org.springframework.security.version>
+		<org.springframework.data-jpa.version>1.8.0.RELEASE</org.springframework.data-jpa.version>
+
+		<org.hibernate.version>4.3.5.Final</org.hibernate.version>
+		<net.sf.ehcache.version>2.9.1</net.sf.ehcache.version>
+		<org.hibernate.javax.persistence-jpa-2.1-api.version>1.0.0.Final</org.hibernate.javax.persistence-jpa-2.1-api.version>
+
+		<javax.servlet.api.version>3.1.0</javax.servlet.api.version>
+		<javax.servlet.jsp.version>2.0</javax.servlet.jsp.version>
+		<javax.servlet.jstl.version>1.2</javax.servlet.jstl.version>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<plugin.maven.war.version>2.4</plugin.maven.war.version>
+		<plugin.maven.eclipse.version>2.9</plugin.maven.eclipse.version>
+		<plugin.maven.compiler.version>3.1</plugin.maven.compiler.version>
+
+		<dir.scripts>${basedir}/webapp/WEB-INF/scripts</dir.scripts>
+	</properties>
+
+	<dependencies>
+		<!-- logger -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${ch.qos.logback.version}</version>
+		</dependency>
+
+		<!-- junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- database -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.connector.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>${com.h2database.version}</version>
+		</dependency>
+
+		<!-- JDBC -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-dbcp2</artifactId>
+			<version>${org.apache.commons.dbcp2.version}</version>
+		</dependency>
+
+		<!-- servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${javax.servlet.api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>${javax.servlet.jsp.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>${javax.servlet.jstl.version}</version>
+		</dependency>
+
+		<!-- spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		
+		<!-- spring security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${org.springframework.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${org.springframework.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${org.springframework.security.version}</version>
+		</dependency>
+		
+		<!-- spring social -->
+		<dependency>
+			<groupId>org.springframework.social</groupId>
+			<artifactId>spring-social-facebook</artifactId>
+			<version>${org.springframework.social.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.social</groupId>
+			<artifactId>spring-social-core</artifactId>
+			<version>${org.springframework.social.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.social</groupId>
+			<artifactId>spring-social-web</artifactId>
+			<version>${org.springframework.social.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.social</groupId>
+			<artifactId>spring-social-config</artifactId>
+			<version>${org.springframework.social.version}</version>
+		</dependency>
+		
+
+		<!-- spring data jpa -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>${org.springframework.data-jpa.version}</version>
+		</dependency>
+
+		<!-- spring test mvc -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test-mvc</artifactId>
+			<version>1.0.0.BUILD-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${org.hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${org.hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-ehcache</artifactId>
+			<version>${org.hibernate.version}</version>
+			 <exclusions>
+				<exclusion>
+					<groupId>net.sf.ehcache</groupId>
+					<artifactId>ehcache-core</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<!-- ehcache -->
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+			<version>${net.sf.ehcache.version}</version>
+		</dependency>
+
+		<!-- hibernate-jpa-2.1-api -->
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
+			<version>${org.hibernate.javax.persistence-jpa-2.1-api.version}</version>
+		</dependency>
+
+		<!-- mockito -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>${org.mockito.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>marker</finalName>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+			</testResource>
+		</testResources>
+
+		<plugins>
+			<!-- webapp -->
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${plugin.maven.war.version}</version>
+				<configuration>
+					<warSourceDirectory>webapp</warSourceDirectory>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+
+			<!-- wtp -->
+			<plugin>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>${plugin.maven.eclipse.version}</version>
+				<configuration>
+					<!-- class file의 source code를 보여줌 -->
+					<downloadSources>true</downloadSources>
+					<wtpversion>2.0</wtpversion>
+					<wtpContextName>/</wtpContextName>
+				</configuration>
+			</plugin>
+
+			<!-- maven compiler -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${plugin.maven.compiler.version}</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
