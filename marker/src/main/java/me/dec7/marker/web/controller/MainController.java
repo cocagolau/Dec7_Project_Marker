@@ -1,4 +1,4 @@
-package me.dec7.mark.web.controller;
+package me.dec7.marker.web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

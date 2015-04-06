@@ -1,4 +1,4 @@
-package me.dec7.mark.config.mark;
+package me.dec7.marker.config.marker;
 
 import java.util.Properties;
 
@@ -19,11 +19,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @PropertySource(value = "classpath:application-properties.xml")
-@EnableJpaRepositories(basePackages = {"me.dec7.mark.persistence"})
+@EnableJpaRepositories(basePackages = {"me.dec7.marker.persistence"})
 @EnableTransactionManagement
 public class PersistenceConfig {
 
-	private static final String PERSISTENCE_PACKAGE = "me.dec7.mark.persistence";
+	private static final String PERSISTENCE_PACKAGE = "me.dec7.marker.persistence";
 	private static final String HIBERNATE_CACHE_USE_QUERY_CACHE = "hibernate.cache.use_query_cache";
 	private static final String HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = "hibernate.cache.use_second_level_cache";
 	private static final String HIBERNATE_CACHE_REGION_FACTORY_CLASS = "hibernate.cache.region.factory_class";
