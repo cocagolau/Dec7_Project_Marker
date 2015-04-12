@@ -3,8 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="KO">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<title>index</title>
 </head>
 <body>
 	<div class="container">

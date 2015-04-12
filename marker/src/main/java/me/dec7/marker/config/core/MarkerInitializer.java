@@ -1,10 +1,14 @@
 package me.dec7.marker.config.core;
 
+import java.util.EnumSet;
+
+import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
 
 import me.dec7.marker.config.marker.AppConfig;
+import me.dec7.marker.filter.SiteMeshFilter;
 
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
@@ -41,6 +45,7 @@ public class MarkerInitializer implements WebApplicationInitializer {
 		dispatcher.setInitParameter("throwExceptionIfNoHandlerFound", TRUE);
 
 		// filter
+		container.addFilter("sitemeshFilter", SiteMeshFilter.class).addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD), false, ALL);
 		FilterRegistration charEncodingfilterReg = container.addFilter("characterEncodingFilter", CharacterEncodingFilter.class);
 		charEncodingfilterReg.setInitParameter("encoding", UTF8);
 		charEncodingfilterReg.setInitParameter("forceEncoding", TRUE);

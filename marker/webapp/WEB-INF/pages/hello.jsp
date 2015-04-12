@@ -4,8 +4,7 @@
 <!DOCTYPE html>
 <html lang="KO">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<title>hello</title>
 </head>
 
 <body>
