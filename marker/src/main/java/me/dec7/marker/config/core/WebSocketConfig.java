@@ -10,7 +10,7 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 
 @Configuration
 @EnableWebSocketMessageBroker
-@ComponentScan(basePackages = "**.socket")
+@ComponentScan(basePackages = {"**.socket"})
 public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
 	@Override

@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -16,14 +17,16 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Configuration
 @PropertySource(value = "classpath:application-properties.xml")
-@EnableJpaRepositories(basePackages = {"me.dec7.marker.persistence"})
-@EnableTransactionManagement
+@EnableJpaRepositories(basePackages = {"me.dec7.marker.repository"})
+@ComponentScan(basePackages = { "**.entity" })
+@EnableTransactionManagement(proxyTargetClass = true)
 public class PersistenceConfig {
 
-	private static final String PERSISTENCE_PACKAGE = "me.dec7.marker.persistence";
+	private static final String PERSISTENCE_PACKAGE = "me.dec7.marker.entity";
 	private static final String HIBERNATE_CACHE_USE_QUERY_CACHE = "hibernate.cache.use_query_cache";
 	private static final String HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = "hibernate.cache.use_second_level_cache";
 	private static final String HIBERNATE_CACHE_REGION_FACTORY_CLASS = "hibernate.cache.region.factory_class";
@@ -84,6 +87,11 @@ public class PersistenceConfig {
 		entityManagerFactoryBean.setJpaProperties(jpaProperties);
 
 		return entityManagerFactoryBean;
+	}
+	
+	@Bean
+	LocalValidatorFactoryBean validator() {
+		return new LocalValidatorFactoryBean();
 	}
 
 }
