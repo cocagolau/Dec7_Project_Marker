@@ -7,6 +7,6 @@ import org.springframework.context.annotation.Import;
 @Configuration
 @ComponentScan(basePackages={"**.config.marker"})
 @Import({ SecurityConfig.class })
-public class MarkerConfig {
+public class AppConfig {
 	
 }

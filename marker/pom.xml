@@ -16,7 +16,7 @@
 		<org.apache.commons.dbcp2.version>2.0.1</org.apache.commons.dbcp2.version>
 		<com.h2database.version>1.1.102</com.h2database.version>
 
-		<org.springframework.version>4.1.5.RELEASE</org.springframework.version>
+		<org.springframework.version>4.1.6.RELEASE</org.springframework.version>
 		<org.springframework.social.version>1.1.0.RELEASE</org.springframework.social.version>
 		<org.springframework.security.version>3.2.6.RELEASE</org.springframework.security.version>
 		<org.springframework.data-jpa.version>1.8.0.RELEASE</org.springframework.data-jpa.version>
@@ -26,6 +26,7 @@
 		<org.hibernate.javax.persistence-jpa-2.1-api.version>1.0.0.Final</org.hibernate.javax.persistence-jpa-2.1-api.version>
 
 		<javax.servlet.api.version>3.1.0</javax.servlet.api.version>
+		<javax.servlet.websocket.version>1.0</javax.servlet.websocket.version>
 		<javax.servlet.jsp.version>2.0</javax.servlet.jsp.version>
 		<javax.servlet.jstl.version>1.2</javax.servlet.jstl.version>
 
@@ -90,6 +91,12 @@
 			<artifactId>jstl</artifactId>
 			<version>${javax.servlet.jstl.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>javax.websocket</groupId>
+			<artifactId>javax.websocket-api</artifactId>
+			<version>${javax.servlet.websocket.version}</version>
+			<scope>provided</scope>
+		</dependency>
 
 		<!-- spring -->
 		<dependency>
@@ -107,7 +114,17 @@
 			<artifactId>spring-jdbc</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-messaging</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+
 		<!-- spring security -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -124,7 +141,7 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${org.springframework.security.version}</version>
 		</dependency>
-		
+
 		<!-- spring social -->
 		<dependency>
 			<groupId>org.springframework.social</groupId>
@@ -146,7 +163,7 @@
 			<artifactId>spring-social-config</artifactId>
 			<version>${org.springframework.social.version}</version>
 		</dependency>
-		
+
 
 		<!-- spring data jpa -->
 		<dependency>
@@ -170,14 +187,14 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-ehcache</artifactId>
 			<version>${org.hibernate.version}</version>
-			 <exclusions>
+			<exclusions>
 				<exclusion>
 					<groupId>net.sf.ehcache</groupId>
 					<artifactId>ehcache-core</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
+
 		<!-- ehcache -->
 		<dependency>
 			<groupId>net.sf.ehcache</groupId>

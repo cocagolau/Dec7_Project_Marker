@@ -4,7 +4,7 @@ import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
 
-import me.dec7.marker.config.marker.MarkerConfig;
+import me.dec7.marker.config.marker.AppConfig;
 
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
@@ -25,14 +25,14 @@ public class MarkerInitializer implements WebApplicationInitializer {
 	public void onStartup(ServletContext container) {
 		// spring application context
 		AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-		rootContext.register(MarkerConfig.class);
+		rootContext.register(AppConfig.class);
 
 		// root application context 라이프사이클 관리
 		container.addListener(new ContextLoaderListener(rootContext));
 
 		// spring application context의 dispatcher servlet
 		AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();
-		dispatcherContext.register(MarkerServletConfig.class);
+		dispatcherContext.register(WebConfig.class);
 
 		// dispatcher servlet 등록
 		ServletRegistration.Dynamic dispatcher = container.addServlet(MARKER, new DispatcherServlet(dispatcherContext));
