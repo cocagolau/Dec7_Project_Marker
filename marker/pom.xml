@@ -11,6 +11,7 @@
 		<ch.qos.logback.version>1.1.3</ch.qos.logback.version>
 		<junit.version>4.12</junit.version>
 		<org.mockito.version>1.10.8</org.mockito.version>
+		<org.hamcrest.version>1.3</org.hamcrest.version>
 
 		<mysql.connector.version>5.1.30</mysql.connector.version>
 		<org.apache.commons.dbcp2.version>2.0.1</org.apache.commons.dbcp2.version>
@@ -33,6 +34,10 @@
 		
 		<org.sitemesh.version>3.0.0</org.sitemesh.version>
 		<org.freemarker.version>2.3.22</org.freemarker.version>
+		<org.dbunit.version>2.5.1</org.dbunit.version>
+		<com.github.springtestdbunit.version>1.2.1</com.github.springtestdbunit.version>
+		
+		<javax.el.version>3.0.0</javax.el.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<plugin.maven.war.version>2.4</plugin.maven.war.version>
@@ -55,6 +60,21 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<!-- mockito -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>${org.mockito.version}</version>
+		</dependency>
+		
+		<!-- hamcrest -->
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-all</artifactId>
+			<version>${org.hamcrest.version}</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -107,10 +127,26 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<version>${org.springframework.version}</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency>
 		<dependency>
@@ -224,14 +260,21 @@
 			<artifactId>validation-api</artifactId>
 			<version>${javax.validation.version}</version>
 		</dependency>
-
-		<!-- mockito -->
+		
+		<!-- JSR-341 -->
 		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-			<version>${org.mockito.version}</version>
+			<groupId>javax.el</groupId>
+			<artifactId>javax.el-api</artifactId>
+			<version>${javax.el.version}</version>
 		</dependency>
 		
+		<!-- JSR-346 -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator-cdi</artifactId>
+			<version>${org.hibernate.validator.version}</version>
+		</dependency>
+
 		<!-- layout engine: sitemesh -->
 		<dependency>
 			<groupId>org.sitemesh</groupId>
@@ -244,6 +287,20 @@
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
 			<version>${org.freemarker.version}</version>
+		</dependency>
+		
+		<!-- dbunit -->
+		<dependency>
+			<groupId>org.dbunit</groupId>
+			<artifactId>dbunit</artifactId>
+			<version>${org.dbunit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.github.springtestdbunit</groupId>
+			<artifactId>spring-test-dbunit</artifactId>
+			<version>${com.github.springtestdbunit.version}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 

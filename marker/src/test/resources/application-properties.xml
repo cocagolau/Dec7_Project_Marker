@@ -5,7 +5,7 @@
 
 	<!-- Database -->
 	<entry key="database.driverClassName">org.h2.Driver</entry>
-	<entry key="database.url">jdbc:h2:~/mark</entry>
+	<entry key="database.url">jdbc:h2:mem:marker</entry>
 	<entry key="database.username">sa</entry>
 	<entry key="database.password"></entry>
 	
@@ -18,7 +18,8 @@
 	<entry key="hibernate.generate_statistics">true</entry>
 	
 	<!-- For singleton factory -->
-	<entry key="hibernate.cache.region_factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</entry>
+	<!-- <entry key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</entry> -->
+	<entry key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory</entry>
 	
 	<!-- enable second level cache and query cache -->
 	<entry key="hibernate.cache.use_second_level_cache">true</entry>

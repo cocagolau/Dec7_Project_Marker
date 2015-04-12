@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Email;
+
 @Entity
 @Table(name = "MEMBER")
 public class Member {
@@ -19,6 +21,7 @@ public class Member {
 
 	@Column(name = "email")
 	@NotNull
+	@Email
 	private String email;
 
 	@Column(name = "name")
