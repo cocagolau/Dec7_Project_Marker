@@ -2,7 +2,7 @@ package me.dec7.marker.dataset;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import me.dec7.marker.config.marker.AppConfig;
+import me.dec7.marker.config.marker.PersistenceConfig;
 import me.dec7.marker.entity.Member;
 import me.dec7.marker.repository.MemberRepository;
 
@@ -20,19 +20,19 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AppConfig.class})
+@ContextConfiguration(classes = {PersistenceConfig.class})
 @TestExecutionListeners({
 		DependencyInjectionTestExecutionListener.class,
 		DirtiesContextTestExecutionListener.class,
 		TransactionalTestExecutionListener.class,
 		DbUnitTestExecutionListener.class })
-@DatabaseSetup("dataset.xml")
 public class DatasetTest {
 	
 	@Autowired
 	private MemberRepository repository;
 	
 	@Test
+	@DatabaseSetup("dataset.xml")
 	//@ExpectedDatabase("expectedData.xml")
 	public void findByName_Dec7() {
 		Member member = repository.findByName("dec7");
