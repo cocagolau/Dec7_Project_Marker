@@ -6,6 +6,8 @@
 	<title>Marker:: <sitemesh:write property='title' /></title>
 	
 	<sitemesh:write property='head' />
+	
+	<script data-main="/scripts/main/main" src="/scripts/libs/require/2.1.17/require-min.js"></script>
 </head>
 
 <body>
@@ -13,4 +15,3 @@
 		<sitemesh:write property='body' />
 	</div>
 </body>
-</html>

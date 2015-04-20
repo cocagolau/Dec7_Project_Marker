@@ -9,7 +9,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value="/")
 public class MainController {
 
-	@RequestMapping(value = { "", "/welcome**" }, method = RequestMethod.GET)
+	@RequestMapping(value = "", method = RequestMethod.GET)
+	public String index() {
+				
+		return "main";
+	}
+	
+	@RequestMapping(value = { "/hello", "/welcome**" }, method = RequestMethod.GET)
 	public String welcomePage(Model model) {
 		model.addAttribute("title", "Spring Security Hello World");
 		model.addAttribute("message", "This is welcome page!");
