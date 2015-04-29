@@ -22,6 +22,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 //	@Autowired
+//	private MarkerAuthenticationProvider markerAuthenticationProvider;
+	
+//	@Autowired
 //	private UserDetailsService userDetailsService;
 
 	@Override
@@ -34,18 +37,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		web.ignoring().antMatchers("/decorators/**");
 	}
 
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(authenticationProvider());
-//		auth.userDetailsService(userDetailsService);
-	}
+//	@Autowired
+//	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//		auth.authenticationProvider(authenticationProvider());
+////		auth.userDetailsService(userDetailsService);
+//	}
 	
 	
 	
 	@Bean
 	AuthenticationProvider authenticationProvider() {
-//		AuthenticationProvider provider = new MarkerAuthenticationProvider();
-		
+
 		return new MarkerAuthenticationProvider();
 	}
 	
@@ -56,14 +58,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //		return null;
 //	}
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		
-		auth.authenticationProvider(authenticationProvider());
-		// TODO Auto-generated method stub
-		super.configure(auth);
-	}
-
 	@Bean
 	@Override
 	protected AuthenticationManager authenticationManager() throws Exception {
@@ -73,6 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		http.authenticationProvider(authenticationProvider());
 		http
 		.formLogin()
 			.loginPage("/login")
@@ -87,17 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.expiredUrl("/login/duplicate");
 		
 		http.csrf().disable();
-		
-//		http.authorizeRequests()
-//		.antMatchers("/admin/**").hasRole("DBA")
-//		.antMatchers("/dba/**").hasRole("DBA")
-//		.and().formLogin().and().logout();
-		
-//		http.authorizeRequests()
-//		.antMatchers("/admin/**").hasAnyRole(new String[]{"USER", "ADMIN", "DBA"})
-//		.antMatchers("/DBA/**").hasAnyRole(new String[]{"USER", "ADMIN", "DBA"})
-//		.antMatchers("/**").hasAnyRole(new String[]{"USER", "ADMIN", "DBA"})
-//		.and().formLogin().and().logout();
+//		http.authenticationProvider(markerAuthenticationProvider);
 		
 		
 //		http

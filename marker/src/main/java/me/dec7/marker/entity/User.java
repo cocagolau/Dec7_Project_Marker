@@ -121,8 +121,9 @@ public class User implements Serializable, UserDetails{
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Collection<GrantedAuthority> authorities = new ArrayList<>();
-		if (this.roles != null) {
-			for (Role role : this.roles) {
+		Set<Role> roles = this.getRoles();
+		if (roles != null) {
+			for (Role role : roles) {
 				SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getName());
 				authorities.add(authority);
 			}

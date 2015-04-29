@@ -15,6 +15,7 @@ import me.dec7.marker.filter.SiteMeshFilter;
 import org.springframework.context.ApplicationContext;
 import org.springframework.orm.hibernate4.support.OpenSessionInViewFilter;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -40,6 +41,10 @@ public class MarkerInitializer implements WebApplicationInitializer {
 
 		// root application context 라이프사이클 관리
 		servletContext.addListener(new ContextLoaderListener(rootContext));
+		
+		// spring session 리스너 등록
+//		servletContext.addListener(new HttpSessionEventPublisher());
+		
 
 		// spring application context의 dispatcher servlet
 		AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();

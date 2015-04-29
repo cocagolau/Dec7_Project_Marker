@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class AdminController {
 
 	@RequestMapping(value = {"","/"}, method = RequestMethod.GET)
-	public String adminPage(Principal principal, Model model) {
+	public String adminPage(Model model) {
 		model.addAttribute("title", "Spring Security Hello World");
 		model.addAttribute("message", "This is protected page!");
 		

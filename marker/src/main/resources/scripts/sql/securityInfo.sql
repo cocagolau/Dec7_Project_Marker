@@ -1,9 +1,9 @@
 INSERT INTO ROLES
 (name)
 VALUES
-('USER'),
-('ADMIN'),
-('DBA');
+('ROLE_USER'),
+('ROLE_ADMIN'),
+('ROLE_DBA');
 
 INSERT INTO USERS
 (email, name, password)

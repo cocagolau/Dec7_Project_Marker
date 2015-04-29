@@ -1,7 +1,11 @@
 package me.dec7.marker.web.controller;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpSession;
 
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +18,7 @@ public class LoginController {
 
 	private static final String VIEW_PRIFIX = "login/";
 
+//	@Secured("IS_AUTHENTICATED_FULLY")
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String login(Model model, HttpSession session) {
 		model.addAttribute("sessionId", session.getId());
@@ -37,12 +42,12 @@ public class LoginController {
 	
 	@RequestMapping(value = "/success", method = RequestMethod.GET)
 	public String loginSuccess(Model model, HttpSession session) {
-		
 		model.addAttribute("sessionId", session.getId());
 		
 		return VIEW_PRIFIX + "loginSuccess";
 	}
 	
+//	@Secured("IS_AUTHENTICATED_FULLY")
 	@RequestMapping(value = "/duplicate", method = RequestMethod.GET)
 	public String loginDuplicate(Model model, HttpSession session) {
 		
@@ -58,7 +63,7 @@ public class LoginController {
 		UserDetails userDetails = (UserDetails)session.getAttribute("userLoginInfo");
 		
 		model.addAttribute("sessionId", session.getId());
-		model.addAttribute("email", userDetails.getUsername());
+//		model.addAttribute("email", userDetails.getUsername());
 		
 		session.invalidate();
 		
