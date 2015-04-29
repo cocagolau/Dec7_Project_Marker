@@ -10,8 +10,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 @Configuration
-@Import({ SecurityConfig.class, PersistenceConfig.class })
-@ComponentScan(basePackages = { "me.dec7.marker.service" })
+@Import({ PersistenceConfig.class, SecurityConfig.class })
+@ComponentScan(basePackages = { "**.service" })
 @EnableAsync
 public class AppConfig {
 

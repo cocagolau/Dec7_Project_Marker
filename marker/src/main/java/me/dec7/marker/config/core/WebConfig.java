@@ -1,9 +1,15 @@
 package me.dec7.marker.config.core;
 
+import me.dec7.marker.config.marker.PersistenceConfig;
+import me.dec7.marker.config.marker.SecurityConfig;
+
+import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -15,6 +21,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 @EnableWebMvc
 @ComponentScan(basePackages = { "**.controller" })
 @Import({ WebSocketConfig.class })
+@EnableGlobalMethodSecurity(prePostEnabled=true, securedEnabled = true)
 public class WebConfig extends WebMvcConfigurerAdapter {
 
 	@Bean

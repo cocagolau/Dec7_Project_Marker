@@ -3,8 +3,8 @@ package me.dec7.marker.dataset;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import me.dec7.marker.config.marker.PersistenceConfig;
-import me.dec7.marker.entity.Member;
-import me.dec7.marker.repository.MemberRepository;
+import me.dec7.marker.entity.User;
+import me.dec7.marker.repository.UserRepository;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,14 +29,14 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 public class DatasetTest {
 	
 	@Autowired
-	private MemberRepository repository;
+	private UserRepository repository;
 	
 	@Test
 	@DatabaseSetup("dataset.xml")
 	//@ExpectedDatabase("expectedData.xml")
 	public void findByName_Dec7() {
-		Member member = repository.findByName("dec7");
-		assertThat(member.getName(), is("dec7"));
+		User user = repository.findByEmail("dec7");
+		assertThat(user.getName(), is("dec7"));
 	}
 
 }

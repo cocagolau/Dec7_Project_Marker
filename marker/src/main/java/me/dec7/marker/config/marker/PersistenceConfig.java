@@ -2,16 +2,23 @@ package me.dec7.marker.config.marker;
 
 import java.util.Properties;
 
-import javax.annotation.Resource;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.ehcache.EhCacheCacheManager;
+import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.Resource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.init.DataSourceInitializer;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -19,10 +26,17 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Configuration
+@EnableCaching
 @PropertySource(value = "classpath:application-properties.xml")
-@EnableJpaRepositories(basePackages = {"**.repository"})
+@EnableJpaRepositories(basePackages = {"**.entity", "**.repository"})
 @EnableTransactionManagement
 public class PersistenceConfig {
+	
+	@Value("classpath:/scripts/sql/securityInfo.sql")
+	private Resource securityInfo;
+	
+	@Value("classpath:/ehcache.xml")
+	private Resource ehcache;
 
 	private static final String PERSISTENCE_PACKAGE = "**.entity";
 	private static final String HIBERNATE_CACHE_USE_QUERY_CACHE = "hibernate.cache.use_query_cache";
@@ -35,13 +49,15 @@ public class PersistenceConfig {
 	private static final String HIBERNATE_HBM2DDL_AUTO = "hibernate.hbm2ddl.auto";
 	private static final String HIBERNATE_DIALECT = "hibernate.dialect";
 	private static final String HIBERNATE_GENERATE_STATISTICS = "hibernate.generate_statistics";
+//	private static final String HIBERNATE_HBM2DDL_IMPORT_FILES = "hibernate.hbm2ddl.import_files";
 
 	private static final String DATABASE_PASSWORD = "database.password";
 	private static final String DATABASE_USERNAME = "database.username";
 	private static final String DATABASE_URL = "database.url";
 	private static final String DATABASE_DRIVER_CLASS_NAME = "database.driverClassName";
+	
 
-	@Resource
+	@javax.annotation.Resource
 	private Environment env;
 
 	@Bean
@@ -81,6 +97,9 @@ public class PersistenceConfig {
 		jpaProperties.put(HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE, env.getRequiredProperty(HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
 		jpaProperties.put(HIBERNATE_CACHE_REGION_FACTORY_CLASS, env.getRequiredProperty(HIBERNATE_CACHE_REGION_FACTORY_CLASS));
 		jpaProperties.put(HIBERNATE_CACHE_USE_QUERY_CACHE, env.getRequiredProperty(HIBERNATE_CACHE_USE_QUERY_CACHE));
+		
+		// init database
+//		jpaProperties.put(HIBERNATE_HBM2DDL_IMPORT_FILES, "/scripts/sql/initSecurity.sql");
 
 		entityManagerFactoryBean.setJpaProperties(jpaProperties);
 
@@ -90,6 +109,32 @@ public class PersistenceConfig {
 	@Bean
 	LocalValidatorFactoryBean validator() {
 		return new LocalValidatorFactoryBean();
+	}
+	
+	@Bean
+	public DataSourceInitializer dataSourceInitializer(DataSource dataSource) {
+		DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
+		dataSourceInitializer.setDataSource(dataSource);
+		
+		ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
+		databasePopulator.addScript(securityInfo);
+		dataSourceInitializer.setDatabasePopulator(databasePopulator);
+		dataSourceInitializer.setEnabled(true);
+		
+		return dataSourceInitializer;
+	}
+	
+	@Bean
+	public CacheManager cacheManager() {
+		return new EhCacheCacheManager(ehCacheCacheManager().getObject());
+	}
+ 
+	@Bean
+	public EhCacheManagerFactoryBean ehCacheCacheManager() {
+		EhCacheManagerFactoryBean cmfb = new EhCacheManagerFactoryBean();
+		cmfb.setConfigLocation(ehcache);
+		cmfb.setShared(true);
+		return cmfb;
 	}
 
 }

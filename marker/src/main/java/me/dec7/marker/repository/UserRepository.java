@@ -1,12 +1,12 @@
 package me.dec7.marker.repository;
 
-import me.dec7.marker.entity.Member;
+import me.dec7.marker.entity.User;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MemberRepository extends JpaRepository<Member, Long>{
+public interface UserRepository extends JpaRepository<User, Long>{
 
-	Member findByName(String name);
+	User findByEmail(String email);
 }
