@@ -7,8 +7,8 @@
 		</layout>
 	</appender>
 	
-	<logger name="*" level="DEBUG" />
-
+	<logger name="me.dec7.marker" level="DEBUG" />
+	
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />
 	</root>

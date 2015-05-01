@@ -1,11 +1,11 @@
 package me.dec7.marker.web.controller;
 
-import java.security.Principal;
-
 import javax.servlet.http.HttpSession;
 
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.context.SecurityContextHolder;
+import me.dec7.marker.common.logging.core.Loggable;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,11 +16,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value="/login")
 public class LoginController {
 
+	private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 	private static final String VIEW_PRIFIX = "login/";
 
 //	@Secured("IS_AUTHENTICATED_FULLY")
 	@RequestMapping(value = "", method = RequestMethod.GET)
+	@Loggable
 	public String login(Model model, HttpSession session) {
+		log.debug("LoginController.login");
+		
 		model.addAttribute("sessionId", session.getId());
 		
 		return VIEW_PRIFIX + "login";
