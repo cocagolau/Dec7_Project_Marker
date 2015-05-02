@@ -1,33 +1,35 @@
-package me.dec7.marker.common.logging.provider;
+package me.dec7.marker.common.aspect.provider;
 
-import me.dec7.marker.common.logging.core.provider.AbstractLoggingProvider;
+import java.util.Map;
+
+import me.dec7.marker.common.aspect.core.provider.AbstractAspectProvider;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@Component("mainServiceLoggingProvider")
-public class MainServiceLoggingProvider extends AbstractLoggingProvider {
+@Component
+public class MainServiceLoggingProvider extends AbstractAspectProvider {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MainServiceLoggingProvider.class);
 	
 	@Override
-	public void before() {
+	public void before(Map<String, Object> attributes) {
 		LOGGER.debug("MainService aspectj before");
 	}
 	
 	@Override
-	public void after() {
+	public void after(Map<String, Object> attributes) {
 		LOGGER.debug("MainService aspectj after");
 	}
 
 	@Override
-	public void afterReturning() {
+	public void afterReturning(Map<String, Object> attributes) {
 		LOGGER.debug("MainService aspectj afterReturning");
 	}
 
 	@Override
-	public void afterThrowing() {
+	public void afterThrowing(Map<String, Object> attributes) {
 		LOGGER.debug("MainService aspectj afterThrowing");
 	}
 

@@ -1,4 +1,4 @@
-package me.dec7.marker.common.logging.annotation;
+package me.dec7.marker.common.aspect.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Log {
 
-	Loggable[] value();
+	MarkerAspect[] value();
 
 }

@@ -1,6 +1,8 @@
-package me.dec7.marker.common.logging.provider;
+package me.dec7.marker.common.aspect.provider;
 
-import me.dec7.marker.common.logging.core.provider.AbstractLoggingProvider;
+import java.util.Map;
+
+import me.dec7.marker.common.aspect.core.provider.AbstractAspectProvider;
 import me.dec7.marker.entity.Log;
 import me.dec7.marker.entity.User;
 import me.dec7.marker.service.LogService;
@@ -11,8 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component("mainControllerLoggingProvider")
-public class MainControllerLoggingProvider extends AbstractLoggingProvider {
+@Component
+public class MainControllerLoggingProvider extends AbstractAspectProvider {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MainControllerLoggingProvider.class);
 	
@@ -24,31 +26,28 @@ public class MainControllerLoggingProvider extends AbstractLoggingProvider {
 	
 	
 	@Override
-//	@Async("taskExecutor")
-	public void before() {
+	public void before(Map<String, Object> attributes) {
 		User user = userService.findByEmail("aaaaaaaa@gmail.com");
 		Log log = new Log(user, "MainController aspectj before");
 		logService.insert(log);
 	}
 	
 	@Override
-//	@Async("taskExecutor")
-	public void after() {
+	public void after(Map<String, Object> attributes) {
 		User user = userService.findByEmail("aaaaaaaa@gmail.com");
 		Log log = new Log(user, "MainController aspectj after");
 		logService.insert(log);
 	}
 
 	@Override
-	public void afterReturning() {
+	public void afterReturning(Map<String, Object> attributes) {
 		User user = userService.findByEmail("aaaaaaaa@gmail.com");
 		Log log = new Log(user, "MainController aspectj afterReturning");
 		logService.insert(log);
 	}
 
 	@Override
-//	@Async("taskExecutor")
-	public void afterThrowing() {
+	public void afterThrowing(Map<String, Object> attributes) {
 		User user = userService.findByEmail("aaaaaaaa@gmail.com");
 		Log log = new Log(user, "MainController aspectj afterThrowing");
 		logService.insert(log);

@@ -1,7 +1,5 @@
 package me.dec7.marker.web.controller;
 
-import java.security.Principal;
-
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

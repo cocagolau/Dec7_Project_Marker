@@ -1,6 +1,9 @@
 package me.dec7.marker.service;
 
-import me.dec7.marker.common.logging.annotation.Loggable;
+import me.dec7.marker.common.aspect.annotation.MarkerAspect;
+import me.dec7.marker.common.aspect.annotation.MarkerAspect.Status;
+import me.dec7.marker.common.aspect.provider.MainControllerLoggingProvider;
+import me.dec7.marker.common.aspect.provider.MainServiceLoggingProvider;
 import me.dec7.marker.entity.User;
 import me.dec7.marker.repository.UserRepository;
 
@@ -17,7 +20,6 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
-	//@Loggable(value="UserService")
 	public User findByEmail(String email) {
 		log.debug("UserServiceImpl.findByEmail");
 		

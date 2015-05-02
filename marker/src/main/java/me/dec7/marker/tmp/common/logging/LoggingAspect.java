@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import me.dec7.marker.common.logging.annotation.Loggable;
-import me.dec7.marker.common.logging.annotation.Loggable.Status;
-import me.dec7.marker.common.logging.core.provider.DefaultLoggingProvider;
-import me.dec7.marker.common.logging.core.provider.LoggingProvider;
+import me.dec7.marker.common.aspect.annotation.MarkerAspect;
+import me.dec7.marker.common.aspect.annotation.MarkerAspect.Status;
+import me.dec7.marker.common.aspect.core.provider.AspectProvider;
+import me.dec7.marker.common.aspect.core.provider.DefaultAspectProvider;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -20,8 +20,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class LoggingAspect implements ApplicationContextAware {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoggingAspect.class);
@@ -30,7 +30,7 @@ public class LoggingAspect implements ApplicationContextAware {
 	
 	@Pointcut(value = "@annotation(annotation)")
 //	@Pointcut(value = "execution(* (@me.dec7.marker.common.logging.annotation.Loggable *).*(..))")
-	public void log(Loggable annotation) { }
+	public void log(MarkerAspect annotation) { }
 	
 //	@Around(value="log(annotation)", argNames="annotation,joinPoint")
 //	@Around(value = "execution(* (@me.dec7.marker.common.logging.annotation.Loggable *).*(..)) && args(annotation)")
@@ -40,9 +40,9 @@ public class LoggingAspect implements ApplicationContextAware {
 //	@Around(value = "log(annotation) && args(annotation, ..)", argNames = "annotation, ..")
 //	@Around(value = "@annotation(me.dec7.marker.common.logging.annotation.Loggable) && args(annotation)")
 	@Around(value = "log(annotation)")
-	public Object around(ProceedingJoinPoint joinPoint, Loggable annotation) throws Throwable {
+	public Object around(ProceedingJoinPoint joinPoint, MarkerAspect annotation) throws Throwable {
 		
-		Class<? extends LoggingProvider> clazz = annotation.provider();
+		Class<? extends AspectProvider> clazz = annotation.provider();
 		List<Status> statuses = Arrays.asList(annotation.status());
 //		List<Status> statuses = new ArrayList<Status>();
 //		Class<? extends LoggingProvider> clazz = DefaultLoggingProvider.class;
@@ -50,7 +50,7 @@ public class LoggingAspect implements ApplicationContextAware {
 //		final boolean ALL = true;
 		
 		Object returnVal = null;
-		LoggingProvider provider = null;
+		AspectProvider provider = null;
 		try {
 			provider = applicationContext.getBean(clazz);
 		} catch(BeansException e) {
@@ -59,7 +59,7 @@ public class LoggingAspect implements ApplicationContextAware {
 		try {
 			// before status
 			if (ALL || statuses.contains(Status.BEFORE)) {
-				provider.before();
+//				provider.before();
 			}
 			
 			try {
@@ -68,19 +68,19 @@ public class LoggingAspect implements ApplicationContextAware {
 			} catch (Throwable e) {
 				// afterThrowing status
 				if (ALL || statuses.contains(Status.AFTER_THROWING)) {
-					provider.afterThrowing();
+//					provider.afterThrowing();
 				}
 				throw e;
 			} finally {
 				// after status
 				if (ALL || statuses.contains(Status.AFTER)) {
-					provider.after();
+//					provider.after();
 				}
 			}
 			
 			// afterReturning status
 			if (ALL || statuses.contains(Status.AFTER_RETURNING)) {
-				provider.afterReturning();
+//				provider.afterReturning();
 			}
 
 		} catch (Exception e) {

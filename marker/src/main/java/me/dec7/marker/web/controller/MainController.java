@@ -1,8 +1,8 @@
 package me.dec7.marker.web.controller;
 
-import me.dec7.marker.common.logging.annotation.Loggable;
-import me.dec7.marker.common.logging.annotation.Loggable.Status;
-import me.dec7.marker.common.logging.provider.MainControllerLoggingProvider;
+import me.dec7.marker.common.aspect.annotation.MarkerAspect;
+import me.dec7.marker.common.aspect.annotation.MarkerAspect.Status;
+import me.dec7.marker.common.aspect.provider.MainControllerLoggingProvider;
 import me.dec7.marker.service.MainService;
 
 import org.slf4j.Logger;
@@ -22,11 +22,14 @@ public class MainController {
 	private MainService mainService;
 
 	@RequestMapping(value = {"","/"}, method = RequestMethod.GET)
-	@Loggable(status=Status.ALL , value="MainController", provider=MainControllerLoggingProvider.class)
+	@MarkerAspect(
+			status=Status.ALL ,
+			provider=MainControllerLoggingProvider.class,
+			value="MainController")
 	public String index() {
 		log.debug("In MainController.index");
 		
-		mainService.printService();
+		mainService.printService("hello", "world", mainService);
 		
 		return "main";
 	}
