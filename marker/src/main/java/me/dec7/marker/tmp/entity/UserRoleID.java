@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 
-@Embeddable
+//@Embeddable
 public class UserRoleID implements Serializable{
 
 	private static final long serialVersionUID = -7119547267595500522L;

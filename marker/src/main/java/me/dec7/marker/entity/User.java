@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -59,10 +60,13 @@ public class User implements Serializable, UserDetails{
 	private Date modifyDate;
 	
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "users_roles", 
+	@JoinTable(name = "user_roles", 
 		joinColumns = { @JoinColumn(name = "user_id", referencedColumnName="id", nullable = false, updatable = false) }, 
 		inverseJoinColumns = { @JoinColumn(name = "role_id", referencedColumnName="id", nullable = false, updatable = false) })
 	private Set<Role> roles = new HashSet<Role>(0);
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	private Set<Log> logs = new HashSet<Log>(0);
 	
 	public User() { }
 	public User(String email, String password) {
@@ -113,6 +117,14 @@ public class User implements Serializable, UserDetails{
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
+	
+	public Set<Log> getLogs() {
+		return logs;
+	}
+	public void setLogs(Set<Log> logs) {
+		this.logs = logs;
+	}
+	
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", name=" + name + ", password=" + password + ", createDate="

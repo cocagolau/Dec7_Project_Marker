@@ -20,9 +20,9 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-@Entity
-@Table(name="user")
-@Cache(region = "user", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+//@Entity
+//@Table(name="user")
+//@Cache(region = "user", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class User implements Serializable {
 	
 	private static final long serialVersionUID = -1578351002883703541L;

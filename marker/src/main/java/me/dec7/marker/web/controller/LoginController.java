@@ -2,7 +2,7 @@ package me.dec7.marker.web.controller;
 
 import javax.servlet.http.HttpSession;
 
-import me.dec7.marker.common.logging.core.Loggable;
+import me.dec7.marker.common.logging.annotation.Loggable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +21,7 @@ public class LoginController {
 
 //	@Secured("IS_AUTHENTICATED_FULLY")
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	@Loggable
+	@Loggable(value="LoginController")
 	public String login(Model model, HttpSession session) {
 		log.debug("LoginController.login");
 		

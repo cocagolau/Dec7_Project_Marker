@@ -17,14 +17,14 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-@Entity
-@Table(name = "url_role")
-@Cache(region = "urlRole", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@AssociationOverrides({
-		@AssociationOverride(name = "pk.program", 
-			joinColumns = @JoinColumn(name = "program_id")),
-		@AssociationOverride(name = "pk.role", 
-			joinColumns = @JoinColumn(name = "role_id")) })
+//@Entity
+//@Table(name = "url_role")
+//@Cache(region = "urlRole", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+//@AssociationOverrides({
+//		@AssociationOverride(name = "pk.program", 
+//			joinColumns = @JoinColumn(name = "program_id")),
+//		@AssociationOverride(name = "pk.role", 
+//			joinColumns = @JoinColumn(name = "role_id")) })
 public class UrlRole implements Serializable {
 
 	private static final long serialVersionUID = 951266737356998870L;

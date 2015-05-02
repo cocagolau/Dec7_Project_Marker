@@ -18,9 +18,9 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-@Entity
-@Table(name="url_repository")
-@Cache(region = "urlRepository", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+//@Entity
+//@Table(name="url_repository")
+//@Cache(region = "urlRepository", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class UrlRepository implements Serializable {
 	
 	private static final long serialVersionUID = -8662842704377257130L;

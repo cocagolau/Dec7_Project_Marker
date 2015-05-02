@@ -1,6 +1,7 @@
-package me.dec7.marker.service;
+package me.dec7.marker.tmp.service;
 
 import me.dec7.marker.entity.User;
+import me.dec7.marker.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

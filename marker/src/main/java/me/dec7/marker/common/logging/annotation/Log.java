@@ -1,15 +1,12 @@
-package me.dec7.marker.common.logging.core;
+package me.dec7.marker.common.logging.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.springframework.stereotype.Component;
-
-@Component
-@Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
 public @interface Log {
 
 	Loggable[] value();

@@ -1,6 +1,6 @@
 package me.dec7.marker.service;
 
-import me.dec7.marker.common.logging.core.Loggable;
+import me.dec7.marker.common.logging.annotation.Loggable;
 import me.dec7.marker.entity.User;
 import me.dec7.marker.repository.UserRepository;
 
@@ -17,7 +17,7 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
-	@Loggable
+	//@Loggable(value="UserService")
 	public User findByEmail(String email) {
 		log.debug("UserServiceImpl.findByEmail");
 		

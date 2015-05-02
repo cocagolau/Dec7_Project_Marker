@@ -1,8 +1,11 @@
-package me.dec7.marker.entity;
+package me.dec7.marker.tmp.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
+
+import me.dec7.marker.entity.Role;
+import me.dec7.marker.entity.User;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

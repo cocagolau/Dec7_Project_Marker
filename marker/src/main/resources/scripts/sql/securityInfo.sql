@@ -8,11 +8,11 @@ VALUES
 INSERT INTO USERS
 (email, name, password)
 VALUES
-('aaaa0000@gmail.com', 'aaaa', '12345678'),
-('bbbb1111@gmail.com', 'bbbb', '12345678'),
-('cccc2222@gmail.com', 'cccc', '12345678');
+('aaaaaaaa@gmail.com', 'aaaa', '123'),
+('bbbbbbbb@gmail.com', 'bbbb', '123'),
+('cccccccc@gmail.com', 'cccc', '123');
 
-INSERT INTO USERS_ROLES
+INSERT INTO USER_ROLES
 (user_id, role_id)
 VALUES
 (1, 1),

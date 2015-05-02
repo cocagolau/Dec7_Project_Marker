@@ -15,7 +15,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = { "**.controller" })
+@ComponentScan(basePackages = { "**.controller", "**.common.logging" })
 @Import({ WebSocketConfig.class })
 @EnableGlobalMethodSecurity(prePostEnabled=true, securedEnabled = true, proxyTargetClass=true)
 @EnableAspectJAutoProxy(proxyTargetClass=true)

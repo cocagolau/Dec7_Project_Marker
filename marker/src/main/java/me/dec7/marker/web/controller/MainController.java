@@ -1,6 +1,8 @@
 package me.dec7.marker.web.controller;
 
-import me.dec7.marker.common.logging.core.Loggable;
+import me.dec7.marker.common.logging.annotation.Loggable;
+import me.dec7.marker.common.logging.annotation.Loggable.Status;
+import me.dec7.marker.common.logging.provider.MainControllerLoggingProvider;
 import me.dec7.marker.service.MainService;
 
 import org.slf4j.Logger;
@@ -20,7 +22,7 @@ public class MainController {
 	private MainService mainService;
 
 	@RequestMapping(value = {"","/"}, method = RequestMethod.GET)
-	@Loggable
+	@Loggable(status=Status.ALL , value="MainController", provider=MainControllerLoggingProvider.class)
 	public String index() {
 		log.debug("In MainController.index");
 		
