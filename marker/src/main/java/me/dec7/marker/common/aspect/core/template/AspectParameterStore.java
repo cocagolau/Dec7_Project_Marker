@@ -3,35 +3,42 @@ package me.dec7.marker.common.aspect.core.template;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import me.dec7.marker.common.aspect.annotation.AspectParam;
 
+import org.apache.commons.lang3.StringUtils;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.DefaultParameterNameDiscoverer;
 
 public class AspectParameterStore {
 
-	private List<String> targetNames;
+	/*
+	 * targetNamesMappedByArgNames 
+	 * key: argName
+	 * val: targetName
+	 */
+	private Map<String, String> targetNamesMappedByArgNames;
 	private Method method;
 	private Map<String, Object> attributes;
 	
 	public AspectParameterStore() { }
 
-	public AspectParameterStore(Method joinPointMethod) {;
-		this.method = joinPointMethod;
-		initMethod(joinPointMethod);
+	public AspectParameterStore(ProceedingJoinPoint joinPoint) {
+		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+		initMethod(signature.getMethod(), joinPoint.getArgs());
 	}
 
-	private void initMethod(Method joinPointMethod) {
+	private void initMethod(Method joinPointMethod, final Object[] args) {
 		if (joinPointMethod == null) {
-			throw new AspectIllegalArgumentException("method가 null");
+			throw new NullPointerException("method가 null");
 		}
 		
 		Map<String, Object> attributes = new HashMap<String, Object>();
-		List<String> targetNames = new ArrayList<String>();
+		Map<String, String> targetNamesMappedByArgNames = new HashMap<String, String>();
+		
 		final Parameter[] methodParams = joinPointMethod.getParameters();
 		
 		// spring에서 제공하는 DefaultParameterNameDiscoverer 사용하여 method의 parameter 이름 가져옴
@@ -45,21 +52,29 @@ public class AspectParameterStore {
 			
 			for (Annotation a : annotations) {
 				if (AspectParam.class.equals(a.annotationType())) {
-					String paramName = paramNames[i];
-					targetNames.add(paramName);
-					attributes.put(paramName, methodParams[i]);
+					AspectParam aspectParamAnnotation = (AspectParam) a;
+					String argName = paramNames[i];
+					String targetName = aspectParamAnnotation.value();
+					
+					if (StringUtils.equals("", targetName)) {
+						targetName = argName;
+					}
+					targetNamesMappedByArgNames.put(argName, targetName);
+					attributes.put(targetName, args[i]);
 
 					break;
 				}
 			}
 		}
 		
-		this.targetNames = targetNames;
+		this.method = joinPointMethod;
+		this.targetNamesMappedByArgNames = targetNamesMappedByArgNames;
 		this.attributes = attributes;
 	}
 
-	public List<String> getTargetNames() {
-		return targetNames;
+
+	public Map<String, String> getTargetNamesMappedByArgNames() {
+		return targetNamesMappedByArgNames;
 	}
 
 	public Method getMethod() {
@@ -70,11 +85,11 @@ public class AspectParameterStore {
 		return attributes;
 	}
 	
-	public Object get(String key) {
+	public Object get(String key) throws IllegalAccessException {
 		Object result = attributes.get(key);
 		
 		if (result == null) {
-			throw new AspectIllegalArgumentException("존재하는 키가 없습니다.");
+			throw new IllegalAccessException("존재하는 키가 없습니다.");
 		}
 		
 		return result;

@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Aspect
@@ -40,8 +41,8 @@ public class AspectTemplate implements ApplicationContextAware {
 		final Class<? extends AspectHandler> handlerClazz = annotation.handler();
 		handler = applicationContext.getBean(handlerClazz);
 		
-		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-		AspectParameterStore store = new AspectParameterStore(signature.getMethod());
+//		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+		AspectParameterStore store = new AspectParameterStore(joinPoint);
 
 		try {
 			// before status
@@ -73,6 +74,8 @@ public class AspectTemplate implements ApplicationContextAware {
 
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
+			
+			return returnVal;
 		}
 		
 		return returnVal;
