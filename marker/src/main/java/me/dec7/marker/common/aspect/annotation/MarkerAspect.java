@@ -12,11 +12,11 @@ import me.dec7.marker.common.aspect.core.provider.DefaultAspectProvider;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MarkerAspect {
 
-	public enum Status {
+	public enum State {
 		BEFORE, AFTER, AFTER_RETURNING, AFTER_THROWING, ALL;
 	}
 	
-	Status[] status() default Status.ALL ;
+	State[] state() default State.ALL ;
 
 	Class<? extends AspectProvider> provider() default DefaultAspectProvider.class;
 

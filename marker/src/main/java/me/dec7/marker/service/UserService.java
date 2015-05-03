@@ -1,7 +1,7 @@
 package me.dec7.marker.service;
 
 import me.dec7.marker.common.aspect.annotation.MarkerAspect;
-import me.dec7.marker.common.aspect.annotation.MarkerAspect.Status;
+import me.dec7.marker.common.aspect.annotation.MarkerAspect.State;
 import me.dec7.marker.common.aspect.provider.MainControllerLoggingProvider;
 import me.dec7.marker.common.aspect.provider.MainServiceLoggingProvider;
 import me.dec7.marker.entity.User;

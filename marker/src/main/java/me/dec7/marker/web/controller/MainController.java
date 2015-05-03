@@ -1,7 +1,7 @@
 package me.dec7.marker.web.controller;
 
 import me.dec7.marker.common.aspect.annotation.MarkerAspect;
-import me.dec7.marker.common.aspect.annotation.MarkerAspect.Status;
+import me.dec7.marker.common.aspect.annotation.MarkerAspect.State;
 import me.dec7.marker.common.aspect.provider.MainControllerLoggingProvider;
 import me.dec7.marker.service.MainService;
 
@@ -23,7 +23,7 @@ public class MainController {
 
 	@RequestMapping(value = {"","/"}, method = RequestMethod.GET)
 	@MarkerAspect(
-			status=Status.ALL ,
+			state=State.ALL ,
 			provider=MainControllerLoggingProvider.class,
 			value="MainController")
 	public String index() {

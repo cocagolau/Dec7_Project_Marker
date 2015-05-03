@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import me.dec7.marker.common.aspect.annotation.MarkerAspect;
-import me.dec7.marker.common.aspect.annotation.MarkerAspect.Status;
+import me.dec7.marker.common.aspect.annotation.MarkerAspect.State;
 import me.dec7.marker.common.aspect.core.provider.AspectProvider;
 import me.dec7.marker.common.aspect.core.provider.DefaultAspectProvider;
 
@@ -43,10 +43,10 @@ public class LoggingAspect implements ApplicationContextAware {
 	public Object around(ProceedingJoinPoint joinPoint, MarkerAspect annotation) throws Throwable {
 		
 		Class<? extends AspectProvider> clazz = annotation.provider();
-		List<Status> statuses = Arrays.asList(annotation.status());
+		List<State> statuses = Arrays.asList(annotation.state());
 //		List<Status> statuses = new ArrayList<Status>();
 //		Class<? extends LoggingProvider> clazz = DefaultLoggingProvider.class;
-		final boolean ALL = statuses.contains(Status.ALL);
+		final boolean ALL = statuses.contains(State.ALL);
 //		final boolean ALL = true;
 		
 		Object returnVal = null;
@@ -58,7 +58,7 @@ public class LoggingAspect implements ApplicationContextAware {
 		
 		try {
 			// before status
-			if (ALL || statuses.contains(Status.BEFORE)) {
+			if (ALL || statuses.contains(State.BEFORE)) {
 //				provider.before();
 			}
 			
@@ -67,19 +67,19 @@ public class LoggingAspect implements ApplicationContextAware {
 				
 			} catch (Throwable e) {
 				// afterThrowing status
-				if (ALL || statuses.contains(Status.AFTER_THROWING)) {
+				if (ALL || statuses.contains(State.AFTER_THROWING)) {
 //					provider.afterThrowing();
 				}
 				throw e;
 			} finally {
 				// after status
-				if (ALL || statuses.contains(Status.AFTER)) {
+				if (ALL || statuses.contains(State.AFTER)) {
 //					provider.after();
 				}
 			}
 			
 			// afterReturning status
-			if (ALL || statuses.contains(Status.AFTER_RETURNING)) {
+			if (ALL || statuses.contains(State.AFTER_RETURNING)) {
 //				provider.afterReturning();
 			}
 

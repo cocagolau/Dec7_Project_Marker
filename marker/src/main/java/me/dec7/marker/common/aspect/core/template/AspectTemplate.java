@@ -10,8 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 import me.dec7.marker.common.aspect.annotation.MarkerAspect;
-import me.dec7.marker.common.aspect.annotation.MarkerAspect.Status;
+import me.dec7.marker.common.aspect.annotation.MarkerAspect.State;
 import me.dec7.marker.common.aspect.annotation.MarkerAspectParam;
+import me.dec7.marker.common.aspect.core.AspectParameter;
 import me.dec7.marker.common.aspect.core.provider.AspectProvider;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -43,74 +44,76 @@ public class AspectTemplate implements ApplicationContextAware {
 		Object returnVal = null;
 		AspectProvider provider = null;
 		
-		Class<? extends AspectProvider> clazz = annotation.provider();
-		List<Status> statuses = Arrays.asList(annotation.status());
-//		List<String> targetNames = Arrays.asList(annotation.targetNames());
-		final boolean ALL = statuses.contains(Status.ALL);
+		final Class<? extends AspectProvider> clazz = annotation.provider();
+		provider = applicationContext.getBean(clazz);
 		
-		Map<String, Object> attributes = new HashMap<String, Object>();
+		
+//		final Class<? extends AspectProvider> clazz = annotation.provider();
+//		provider = applicationContext.getBean(clazz);
+		
+		final List<State> states = Arrays.asList(annotation.state());
+		final boolean ALL = states.contains(State.ALL);
+//		final Map<String, Object> attributes = new HashMap<String, Object>();
+//		final List<String> targetNames = new ArrayList<String>();
 		
 		// parameters' name of a method
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-		Method method = signature.getMethod();
-		Parameter[] parameters = method.getParameters();
+		AspectParameterStore store = new AspectParameterStore(signature.getMethod());
 		
-		// spring에서 제공하는 DefaultParameterNameDiscoverer 사용하여 method의 parameter 이름 가져옴
-		DefaultParameterNameDiscoverer discoverer = new DefaultParameterNameDiscoverer();
-		String[] paramNames = discoverer.getParameterNames(method);
+//		Parameter[] parameters = method.getParameters();
+//		Class<?>[] parameterTypes = method.getParameterTypes();
 		
-		// MarkerAspectParam annotation이 존재하는 parameter의 index를 저장
-		List<String> targetNames = new ArrayList<String>();
-		for (int i=0; i<parameters.length; i++) {
-			Parameter param = parameters[i];
-			Annotation[] annotations = param.getAnnotations();
-			
-			for (Annotation a : annotations) {
-				if (MarkerAspectParam.class.equals(a.annotationType())) {
-					String paramName = paramNames[i];
-					targetNames.add(paramName);
-					attributes.put(paramName, parameters[i]);
-					break;
-				}
-			}
-		}
 		
+		
+//		// spring에서 제공하는 DefaultParameterNameDiscoverer 사용하여 method의 parameter 이름 가져옴
+//		DefaultParameterNameDiscoverer discoverer = new DefaultParameterNameDiscoverer();
+//		String[] paramNames = discoverer.getParameterNames(method);
+//		
+//		// MarkerAspectParam annotation이 존재하는 parameter의 index를 저장
+//		for (int i=0; i<parameters.length; i++) {
+//			Parameter param = parameters[i];
+//			Annotation[] annotations = param.getAnnotations();
+//			
+//			for (Annotation a : annotations) {
+//				if (MarkerAspectParam.class.equals(a.annotationType())) {
+//					String paramName = paramNames[i];
+//					targetNames.add(paramName);
+////					attributes.put(paramName, parameters[i]);
+//
+//					break;
+//				}
+//			}
+//		}
+
 		try {
-			provider = applicationContext.getBean(clazz);
-
-			try {
-				// before status
-				if (ALL || statuses.contains(Status.BEFORE)) {
-					provider.before(attributes);
-				}
-				
-				// exec joinPoint
-				try {
-					returnVal = joinPoint.proceed();
-					
-				} catch (Throwable e) {
-					// afterThrowing status
-					if (ALL || statuses.contains(Status.AFTER_THROWING)) {
-						provider.afterThrowing(attributes);
-					}
-					throw e;
-				} finally {
-					// after status
-					if (ALL || statuses.contains(Status.AFTER)) {
-						provider.after(attributes);
-					}
-				}
-				
-				// afterReturning status
-				if (ALL || statuses.contains(Status.AFTER_RETURNING)) {
-					provider.afterReturning(attributes);
-				}
-
-			} catch (Exception e) {
-				LOGGER.error(e.getMessage());
+			// before status
+			if (ALL || states.contains(State.BEFORE)) {
+				provider.before(store);
 			}
 			
-		} catch(BeansException e) {
+			// exec joinPoint
+			try {
+				returnVal = joinPoint.proceed();
+				
+			} catch (Throwable e) {
+				// afterThrowing status
+				if (ALL || states.contains(State.AFTER_THROWING)) {
+					provider.afterThrowing(store);
+				}
+				throw e;
+			} finally {
+				// after status
+				if (ALL || states.contains(State.AFTER)) {
+					provider.after(store);
+				}
+			}
+			
+			// afterReturning status
+			if (ALL || states.contains(State.AFTER_RETURNING)) {
+				provider.afterReturning(store);
+			}
+
+		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
 		}
 		
