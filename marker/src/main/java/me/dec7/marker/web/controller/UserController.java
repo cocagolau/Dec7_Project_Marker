@@ -3,7 +3,9 @@ package me.dec7.marker.web.controller;
 import me.dec7.marker.common.aspect.annotation.AspectMethod;
 import me.dec7.marker.common.aspect.annotation.AspectMethod.State;
 import me.dec7.marker.common.aspect.annotation.AspectParam;
-import me.dec7.marker.common.aspect.handler.UserControllerLoggingHandler;
+import me.dec7.marker.common.aspect.handler.ANewUserControllerLoggingAspectHandler;
+import me.dec7.marker.common.aspect.handler.NewUserControllerLoggingAspectHandler;
+import me.dec7.marker.common.aspect.handler.UserControllerLoggingAspectHandler;
 import me.dec7.marker.service.MainService;
 
 import org.slf4j.Logger;
@@ -29,7 +31,7 @@ public class UserController {
 	@RequestMapping(value = {"/{email}"}, method = RequestMethod.GET)
 	@AspectMethod(
 			state=State.ALL ,
-			handler=UserControllerLoggingHandler.class,
+			handlers={UserControllerLoggingAspectHandler.class, NewUserControllerLoggingAspectHandler.class, ANewUserControllerLoggingAspectHandler.class},
 			value="userController")
 	public String index(@PathVariable @AspectParam String email, Model model) {
 		

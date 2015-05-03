@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import me.dec7.marker.common.aspect.core.handler.AspectHandler;
-import me.dec7.marker.common.aspect.core.handler.DefaultAspectProvider;
+import me.dec7.marker.common.aspect.core.handler.DefaultAspectHandler;
 
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
@@ -18,8 +18,10 @@ public @interface AspectMethod {
 	
 	State[] state() default State.ALL ;
 
-	Class<? extends AspectHandler> handler() default DefaultAspectProvider.class;
+	Class<? extends AspectHandler>[] handlers() default DefaultAspectHandler.class;
 
 	String value();
+
+	
 
 }

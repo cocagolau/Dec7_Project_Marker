@@ -7,7 +7,7 @@ import java.util.List;
 import me.dec7.marker.common.aspect.annotation.AspectMethod;
 import me.dec7.marker.common.aspect.annotation.AspectMethod.State;
 import me.dec7.marker.common.aspect.core.handler.AspectHandler;
-import me.dec7.marker.common.aspect.core.handler.DefaultAspectProvider;
+import me.dec7.marker.common.aspect.core.handler.DefaultAspectHandler;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -42,7 +42,7 @@ public class LoggingAspect implements ApplicationContextAware {
 	@Around(value = "log(annotation)")
 	public Object around(ProceedingJoinPoint joinPoint, AspectMethod annotation) throws Throwable {
 		
-		Class<? extends AspectHandler> clazz = annotation.handler();
+//		Class<? extends AspectHandler> clazz = annotation.handler();
 		List<State> statuses = Arrays.asList(annotation.state());
 //		List<Status> statuses = new ArrayList<Status>();
 //		Class<? extends LoggingProvider> clazz = DefaultLoggingProvider.class;
@@ -52,7 +52,7 @@ public class LoggingAspect implements ApplicationContextAware {
 		Object returnVal = null;
 		AspectHandler provider = null;
 		try {
-			provider = applicationContext.getBean(clazz);
+//			provider = applicationContext.getBean(clazz);
 		} catch(BeansException e) {
 		}
 		

@@ -1,5 +1,6 @@
 package me.dec7.marker.common.aspect.core.template;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,13 +12,11 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Aspect
@@ -34,20 +33,22 @@ public class AspectTemplate implements ApplicationContextAware {
 	@Around(value = "log(annotation)")
 	public Object around(ProceedingJoinPoint joinPoint, AspectMethod annotation) throws Throwable {
 		Object returnVal = null;
-		AspectHandler handler = null;
+		List<AspectHandler> handlers = new ArrayList<AspectHandler>();
 		
 		final List<State> states = Arrays.asList(annotation.state());
 		final boolean ALL = states.contains(State.ALL);
-		final Class<? extends AspectHandler> handlerClazz = annotation.handler();
-		handler = applicationContext.getBean(handlerClazz);
+		final Class<? extends AspectHandler>[] handlerClasses = annotation.handlers();
 		
-//		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-		AspectParameterStore store = new AspectParameterStore(joinPoint);
+		for (int i=0; i<handlerClasses.length; i++) {
+			handlers.add(applicationContext.getBean(handlerClasses[i]));
+		}
+
+		AspectParameterStore store = new AspectParameterStore(joinPoint, annotation.value());
 
 		try {
 			// before status
 			if (ALL || states.contains(State.BEFORE)) {
-				handler.before(store);
+				execHandlers(State.BEFORE, handlers, store);
 			}
 			
 			// exec joinPoint
@@ -57,19 +58,19 @@ public class AspectTemplate implements ApplicationContextAware {
 			} catch (Throwable e) {
 				// afterThrowing status
 				if (ALL || states.contains(State.AFTER_THROWING)) {
-					handler.afterThrowing(store);
+					execHandlers(State.AFTER_THROWING, handlers, store);
 				}
 				throw e;
 			} finally {
 				// after status
 				if (ALL || states.contains(State.AFTER)) {
-					handler.after(store);
+					execHandlers(State.AFTER, handlers, store);
 				}
 			}
 			
 			// afterReturning status
 			if (ALL || states.contains(State.AFTER_RETURNING)) {
-				handler.afterReturning(store);
+				execHandlers(State.AFTER_RETURNING, handlers, store);
 			}
 
 		} catch (Exception e) {
@@ -79,6 +80,29 @@ public class AspectTemplate implements ApplicationContextAware {
 		}
 		
 		return returnVal;
+	}
+
+	private void execHandlers(State state, List<AspectHandler> handlers, AspectParameterStore store) {
+		
+		for (AspectHandler handler : handlers) {
+			switch(state) {
+				case BEFORE :
+					handler.before(store);
+					break;
+				case AFTER :
+					handler.after(store);
+					break;
+				case AFTER_RETURNING :
+					handler.afterReturning(store);
+					break;
+				case AFTER_THROWING :
+					handler.afterThrowing(store);
+					break;
+				default :
+					LOGGER.warn("[" + this.getClass().getName() +"] [AspectHandler] not found handler state");
+					break;
+			}
+		}
 	}
 
 	@Override

@@ -2,8 +2,8 @@ package me.dec7.marker.service;
 
 import me.dec7.marker.common.aspect.annotation.AspectMethod;
 import me.dec7.marker.common.aspect.annotation.AspectMethod.State;
-import me.dec7.marker.common.aspect.handler.MainControllerLoggingHandler;
-import me.dec7.marker.common.aspect.handler.MainServiceLoggingHandler;
+import me.dec7.marker.common.aspect.handler.MainControllerLoggingAspectHandler;
+import me.dec7.marker.common.aspect.handler.MainServiceLoggingAspectHandler;
 import me.dec7.marker.entity.User;
 import me.dec7.marker.repository.UserRepository;
 

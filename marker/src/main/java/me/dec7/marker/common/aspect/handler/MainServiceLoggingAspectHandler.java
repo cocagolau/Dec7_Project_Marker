@@ -8,9 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MainServiceLoggingHandler extends AbstractAspectHandler {
+public class MainServiceLoggingAspectHandler extends AbstractAspectHandler {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(MainServiceLoggingHandler.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(MainServiceLoggingAspectHandler.class);
 	
 	@Override
 	public void before(AspectParameterStore store) {

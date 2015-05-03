@@ -3,7 +3,7 @@ package me.dec7.marker.service;
 import me.dec7.marker.common.aspect.annotation.AspectMethod;
 import me.dec7.marker.common.aspect.annotation.AspectMethod.State;
 import me.dec7.marker.common.aspect.annotation.AspectParam;
-import me.dec7.marker.common.aspect.handler.MainServiceLoggingHandler;
+import me.dec7.marker.common.aspect.handler.MainServiceLoggingAspectHandler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

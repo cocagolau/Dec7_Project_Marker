@@ -23,10 +23,16 @@ public class AspectParameterStore {
 	private Map<String, String> targetNamesMappedByArgNames;
 	private Method method;
 	private Map<String, Object> attributes;
+	private String value;
 	
 	public AspectParameterStore() { }
 
 	public AspectParameterStore(ProceedingJoinPoint joinPoint) {
+		this(joinPoint, null);
+	}
+	
+	public AspectParameterStore(ProceedingJoinPoint joinPoint, String value) {
+		this.value = (value == null)?"":value;
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
 		initMethod(signature.getMethod(), joinPoint.getArgs());
 	}
@@ -94,6 +100,13 @@ public class AspectParameterStore {
 		
 		return result;
 	}
+
+	public String getValue() {
+
+		return value;
+	}
+	
+	
 
 
 }
