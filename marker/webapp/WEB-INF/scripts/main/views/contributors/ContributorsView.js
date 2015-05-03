@@ -1,71 +1,78 @@
 define([
-  'jquery',
-  'underscore',
-  'backbone',
-  'collections/contributors/ContributorsCollection',
-  'views/contributors/ContributorsListView',
-  'text!templates/contributors/contributorsTemplate.html'
-], function($, _, Backbone, ContributorsCollection, ContributorsListView, contributorsTemplate){
+'jquery',
+'underscore',
+'backbone',
+'collections/contributors/ContributorsCollection',
+'views/contributors/ContributorsListView',
+'text!templates/contributors/contributorsTemplate.html' ],
+function($, _, Backbone, ContributorsCollection, ContributorsListView,
+		contributorsTemplate) {
 
-  //var contributorsListView;
+	//var contributorsListView;
 
-  var ContributorsView = Backbone.View.extend({
-    
-    el: $("#page"),
+	var ContributorsView = Backbone.View.extend({
 
-    initialize:function() {
+		el : $("#page"),
 
-      var that = this;
+		initialize : function() {
 
-      var onDataHandler = function(collection) {
-          that.render();
-      }
+			var that = this;
 
-      that.collection = new ContributorsCollection([]); 
-      that.collection.fetch({ success : onDataHandler, dataType: "jsonp" });
+			var onDataHandler = function(collection) {
+				that.render();
+			}
 
-    },
+			that.collection = new ContributorsCollection([]);
+			that.collection.fetch({
+				success : onDataHandler,
+				dataType : "jsonp"
+			});
 
-    render: function(){
+		},
 
-      $('.menu li').removeClass('active');
-      $('.menu li a[href="'+window.location.hash+'"]').parent().addClass('active');
+		render : function() {
 
-      var total_contributions = this.getTotalContributions(this.collection.models);
-      var total_contributors = this.collection.models.length;  
-    
-      var data = { total_contributions : total_contributions, 
-                  total_contributors : total_contributors}; 
+			$('.menu li').removeClass('active');
+			$('.menu li a[href="' + window.location.hash + '"]').parent().addClass('active');
 
-      // main view  
-      var compiledTemplate = _.template( contributorsTemplate, data );
-      this.$el.html( compiledTemplate ); 
+			var total_contributions = this.getTotalContributions(this.collection.models);
+			var total_contributors = this.collection.models.length;
 
-      // sub view 
-      var contributorsListView = new ContributorsListView({ collection: this.collection}); 
-      contributorsListView.render();
+			var data = {
+				total_contributions : total_contributions,
+				total_contributors : total_contributors
+			};
 
-    },
+			// main view  
+			var compiledTemplate = _.template(contributorsTemplate, data);
+			this.$el.html(compiledTemplate);
 
-    getTotalContributions:function( aModels ){
+			// sub view 
+			var contributorsListView = new ContributorsListView({
+				collection : this.collection
+			});
+			contributorsListView.render();
 
-      var total = 0;
-      
-      _.each(aModels, function(contributorModel) { 
-         var contributorContributions = Number ( contributorModel.get("contributions") );
-         total += contributorContributions; 
-      });
+		},
 
-      return total; 
-    },
+		getTotalContributions : function(aModels) {
 
-    clearListView: function() {
-      console.log("clearing sub view");
-      contributorsListView.clearListView();
-    }
+			var total = 0;
 
+			_.each(aModels, function(contributorModel) {
+				var contributorContributions = Number(contributorModel
+						.get("contributions"));
+				total += contributorContributions;
+			});
 
+			return total;
+		},
 
-  });
-  return ContributorsView;
+		clearListView : function() {
+			console.log("clearing sub view");
+			contributorsListView.clearListView();
+		}
+
+	});
+	return ContributorsView;
 });

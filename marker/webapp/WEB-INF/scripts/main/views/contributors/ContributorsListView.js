@@ -1,224 +1,224 @@
 define([
-  'jquery',
-  'underscore',
-  'backbone',
-  'collections/contributors/ContributorsCollection',
-  'text!templates/contributors/contributorsListTemplate.html'
-], function($, _, Backbone, ContributorsCollection, contributorListTemplate){
-  
-  var ContributorsListView = Backbone.View.extend({
+'jquery',
+'underscore',
+'backbone',
+'collections/contributors/ContributorsCollection',
+'text!templates/contributors/contributorsListTemplate.html' ],
+function($, _, Backbone, ContributorsCollection, contributorListTemplate) {
 
-    goldContributors : [],
-    silverContributors : [],
-    bronzeContributors : [],
+	var ContributorsListView = Backbone.View.extend({
 
-    el : $("#contributors-list"),
-    tagName:"ul",
-    
-    initialize : function() {
-     
-      var that = this;
-      that.bind("reset", that.clearView);
-    },
+		goldContributors : [],
+		silverContributors : [],
+		bronzeContributors : [],
 
-    resetMedalists : function(){
+		el : $("#contributors-list"),
+		tagName : "ul",
 
-      var that = this;
+		initialize : function() {
+			var that = this;
+			that.bind("reset", that.clearView);
+		},
 
-      that.goldContributors = [];
-      that.silverContributors = [];
-      that.bronzeContributors = [];
-      
-    }, 
+		resetMedalists : function() {
+			var that = this;
 
-    render : function() {
-   
-        // when it returns to this view, why does it redraw without clearing the lists?!
-        // something to do with how it's animating I think...not sure
-        var that = this;
+			that.goldContributors = [];
+			that.silverContributors = [];
+			that.bronzeContributors = [];
 
-        that.resetMedalists(); 
-       
-        that.awardMedals(this.collection.models); 
+		},
 
-        // hide the container list while adding contributors
-        $('#contributors-list').hide();
+		render : function() {
+			// when it returns to this view, why does it redraw without clearing the lists?!
+			// something to do with how it's animating I think...not sure
+			var that = this;
 
-        // there are 3 podiums for each group 
-        var podium;
+			that.resetMedalists();
 
-        var goldPodium = {
-            baseHeight: '80px',
-            baseWidth: '120px',
-            achievement: 'Over 50 Contributions'
-        }; 
+			that.awardMedals(this.collection.models);
 
-        var silverPodium = {
-           baseHeight: '60px',
-           baseWidth: '160px',
-           achievement: '5 - 50 Contributions'
-        }
+			// hide the container list while adding contributors
+			$('#contributors-list').hide();
 
-         var bronzePodium = {
-           baseHeight: '40px',
-           baseWidth: '680px',
-           achievement: '1 - 5 Contributions'
-        }
+			// there are 3 podiums for each group 
+			var podium;
 
-        var data = {
-              contributors: that.goldContributors,
-              _: _,
-              podium : goldPodium 
-        };
+			var goldPodium = {
+				baseHeight : '80px',
+				baseWidth : '120px',
+				achievement : 'Over 50 Contributions'
+			};
 
-        // render bronze list 
-        data.contributors = that.bronzeContributors;
-        data.podium = bronzePodium;
+			var silverPodium = {
+				baseHeight : '60px',
+				baseWidth : '160px',
+				achievement : '5 - 50 Contributions'
+			}
 
-        var bronzeCompiledTemplate = _.template( contributorListTemplate, data );
-        $("#bronze-podium").html( bronzeCompiledTemplate ); 
+			var bronzePodium = {
+				baseHeight : '40px',
+				baseWidth : '680px',
+				achievement : '1 - 5 Contributions'
+			}
 
-        // render silver list
-        data.contributors = that.silverContributors;
-        data.podium = silverPodium;
+			var data = {
+				contributors : that.goldContributors,
+				_ : _,
+				podium : goldPodium
+			};
 
-        var silverCompiledTemplate = _.template( contributorListTemplate, data );
-        
-        $("#silver-podium").html( silverCompiledTemplate ); 
+			// render bronze list 
+			data.contributors = that.bronzeContributors;
+			data.podium = bronzePodium;
 
-        // render gold list  
-        data.contributors = that.goldContributors;
-        data.podium = goldPodium;
-        var goldCompiledTemplate = _.template( contributorListTemplate, data );
-        $("#gold-podium").html( goldCompiledTemplate ); 
+			var bronzeCompiledTemplate = _.template(contributorListTemplate, data);
+			$("#bronze-podium").html(bronzeCompiledTemplate);
 
-        that.animate();
+			// render silver list
+			data.contributors = that.silverContributors;
+			data.podium = silverPodium;
 
-        return this;
-      }, 
+			var silverCompiledTemplate = _.template(contributorListTemplate, data);
 
-      awardMedals : function(aModels) {
+			$("#silver-podium").html(silverCompiledTemplate);
 
-        var that = this; 
+			// render gold list  
+			data.contributors = that.goldContributors;
+			data.podium = goldPodium;
+			var goldCompiledTemplate = _.template(contributorListTemplate, data);
+			$("#gold-podium").html(goldCompiledTemplate);
 
-        var goldMedalHex = '#CFB52B';
-        var silverMedalHex = '#E6E8FA';
-        var bronzeMedalHex = '#A67D3D';
-        var githubPath;
-        var contributors;
-        var count = 0;  
+			that.animate();
 
-        _.each(aModels, function(contributor) {
+			return this;
+		},
 
-            var contributions = Number ( contributor.get( 'contributions' ) );
-            var medalHex; 
-            var picWidth; 
+		awardMedals : function(aModels) {
 
-            if ( contributions >= 50 ) {
-              medalHex = goldMedalHex;
-              picWidth = '120px';
-              contributors = that.goldContributors; 
-            } else if ( contributions < 50 && contributions >= 5) {
-              medalHex = silverMedalHex;
-              picWidth = '100px';
-              contributors = that.silverContributors; 
-            } else {
-              medalHex = bronzeMedalHex;
-              picWidth = '80px';
-              contributors = that.bronzeContributors; 
-            }
+			var that = this;
 
-            githubPath = "https://github.com/" + contributor.get('login');
+			var goldMedalHex = '#CFB52B';
+			var silverMedalHex = '#E6E8FA';
+			var bronzeMedalHex = '#A67D3D';
+			var githubPath;
+			var contributors;
+			var count = 0;
 
-            contributor.set( 'medalHex', medalHex);
-            contributor.set( 'picWidth', picWidth);
-            contributor.set( 'githubPath', githubPath);
-            contributor.set( 'name', 'contributor' + count ); 
-            contributors.push(contributor);
+			_.each(aModels, function(contributor) {
 
-            count++; 
+				var contributions = Number(contributor
+						.get('contributions'));
+				var medalHex;
+				var picWidth;
 
-        });
-      },
+				if (contributions >= 50) {
+					medalHex = goldMedalHex;
+					picWidth = '120px';
+					contributors = that.goldContributors;
+				} else if (contributions < 50 && contributions >= 5) {
+					medalHex = silverMedalHex;
+					picWidth = '100px';
+					contributors = that.silverContributors;
+				} else {
+					medalHex = bronzeMedalHex;
+					picWidth = '80px';
+					contributors = that.bronzeContributors;
+				}
 
-      animate : function() {
+				githubPath = "https://github.com/"
+						+ contributor.get('login');
 
-        var that = this; 
+				contributor.set('medalHex', medalHex);
+				contributor.set('picWidth', picWidth);
+				contributor.set('githubPath', githubPath);
+				contributor.set('name', 'contributor' + count);
+				contributors.push(contributor);
 
-        $("#gold-podium").hide();
-        $("#silver-podium").hide();
-        $("#bronze-podium").hide();
+				count++;
 
+			});
+		},
 
-        // hide the container list while adding contributors
-        $('#contributors-list').show();
+		animate : function() {
 
-        // animate in bronze
-        $("#bronze-podium").find(".base").hide();
-        $("#bronze-podium").find(".base").slideDown('slow').delay(0);
+			var that = this;
 
-        _.each(that.bronzeContributors, function(contributor) {
-          var hideId = '#' + contributor.get('name'); 
+			$("#gold-podium").hide();
+			$("#silver-podium").hide();
+			$("#bronze-podium").hide();
 
-          $( hideId ).hide(); 
-     
-        });
+			// hide the container list while adding contributors
+			$('#contributors-list').show();
 
-        var bronzeDelayCount = 1000;
-        var bronzeDelayInc = 200;
-        _.each(that.bronzeContributors, function(contributor) {
-            var animateId = '#' + contributor.get('name'); 
+			// animate in bronze
+			$("#bronze-podium").find(".base").hide();
+			$("#bronze-podium").find(".base").slideDown('slow').delay(0);
 
-            $( animateId ).delay(bronzeDelayCount).slideDown('slow');
-            bronzeDelayCount += bronzeDelayInc;
-        });
-        
-        // animate in silver
-        $("#silver-podium").find(".base").hide();
-        $("#silver-podium").find(".base").slideDown('slow').delay(bronzeDelayCount);
-        _.each(that.silverContributors, function(contributor) {
-          var hideId = '#' + contributor.get('name'); 
+			_.each(that.bronzeContributors, function(contributor) {
+				var hideId = '#' + contributor.get('name');
 
-          $( hideId ).hide(); 
-     
-        });
+				$(hideId).hide();
 
-        var silverDelayCount = bronzeDelayCount;
-        var silverDelayInc = 400;
-        _.each(that.silverContributors, function(contributor) {
-            var animateId = '#' + contributor.get('name'); 
+			});
 
-            $( animateId ).delay(silverDelayCount).slideDown('slow');
-            silverDelayCount += silverDelayInc;
-        });
+			var bronzeDelayCount = 1000;
+			var bronzeDelayInc = 200;
+			_.each(that.bronzeContributors, function(contributor) {
+				var animateId = '#' + contributor.get('name');
 
-        // animate in gold 
-        $("#gold-podium").find(".base").hide();
-        $("#gold-podium").find(".base").slideDown('slow').delay(silverDelayCount);
-        _.each(that.goldContributors, function(contributor) {
-          var hideId = '#' + contributor.get('name'); 
+				$(animateId).delay(bronzeDelayCount).slideDown('slow');
+				bronzeDelayCount += bronzeDelayInc;
+			});
 
-          $( hideId ).hide(); 
-     
-        });
+			// animate in silver
+			$("#silver-podium").find(".base").hide();
+			$("#silver-podium").find(".base").slideDown('slow').delay(
+					bronzeDelayCount);
+			_.each(that.silverContributors, function(contributor) {
+				var hideId = '#' + contributor.get('name');
 
-        var goldDelayCount = silverDelayCount;
-        var goldDelayInc = 600;
-        _.each(that.goldContributors, function(contributor) {
-            var animateId = '#' + contributor.get('name'); 
+				$(hideId).hide();
 
-            $( animateId ).delay(goldDelayCount).slideDown('slow');
-            goldDelayCount += goldDelayInc;
-        });
+			});
 
-        $("#bronze-podium").show();
-        $("#silver-podium").show();
-        $("#gold-podium").show();
+			var silverDelayCount = bronzeDelayCount;
+			var silverDelayInc = 400;
+			_.each(that.silverContributors, function(contributor) {
+				var animateId = '#' + contributor.get('name');
 
-      }
+				$(animateId).delay(silverDelayCount).slideDown('slow');
+				silverDelayCount += silverDelayInc;
+			});
 
-  });
+			// animate in gold 
+			$("#gold-podium").find(".base").hide();
+			$("#gold-podium").find(".base").slideDown('slow').delay(
+					silverDelayCount);
+			_.each(that.goldContributors, function(contributor) {
+				var hideId = '#' + contributor.get('name');
 
-  return ContributorsListView;
+				$(hideId).hide();
+
+			});
+
+			var goldDelayCount = silverDelayCount;
+			var goldDelayInc = 600;
+			_.each(that.goldContributors, function(contributor) {
+				var animateId = '#' + contributor.get('name');
+
+				$(animateId).delay(goldDelayCount).slideDown('slow');
+				goldDelayCount += goldDelayInc;
+			});
+
+			$("#bronze-podium").show();
+			$("#silver-podium").show();
+			$("#gold-podium").show();
+
+		}
+
+	});
+
+	return ContributorsListView;
 
 });
