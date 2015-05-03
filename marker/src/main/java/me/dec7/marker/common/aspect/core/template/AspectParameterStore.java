@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import me.dec7.marker.common.aspect.annotation.MarkerAspect.State;
 import me.dec7.marker.common.aspect.annotation.MarkerAspectParam;
 
 import org.springframework.core.DefaultParameterNameDiscoverer;
@@ -23,20 +22,17 @@ public class AspectParameterStore {
 
 	public AspectParameterStore(Method joinPointMethod) {;
 		this.method = joinPointMethod;
-		initJoinPointMethod(joinPointMethod);
+		initMethod(joinPointMethod);
 	}
 
-	private void initJoinPointMethod(Method joinPointMethod) {
+	private void initMethod(Method joinPointMethod) {
 		if (joinPointMethod == null) {
 			throw new IllegalArgumentException();
 		}
 		
 		Map<String, Object> attributes = new HashMap<String, Object>();
 		List<String> targetNames = new ArrayList<String>();
-		
 		final Parameter[] methodParams = joinPointMethod.getParameters();
-//		final Class<?>[] methodParamTypes = joinPointMethod.getParameterTypes();
-		
 		
 		// spring에서 제공하는 DefaultParameterNameDiscoverer 사용하여 method의 parameter 이름 가져옴
 		DefaultParameterNameDiscoverer discoverer = new DefaultParameterNameDiscoverer();
@@ -51,7 +47,7 @@ public class AspectParameterStore {
 				if (MarkerAspectParam.class.equals(a.annotationType())) {
 					String paramName = paramNames[i];
 					targetNames.add(paramName);
-//					attributes.put(paramName, parameters[i]);
+					attributes.put(paramName, methodParams[i]);
 
 					break;
 				}
@@ -60,6 +56,23 @@ public class AspectParameterStore {
 		
 		this.targetNames = targetNames;
 		this.attributes = attributes;
+	}
+
+	public List<String> getTargetNames() {
+		return targetNames;
+	}
+
+	public Method getMethod() {
+		return method;
+	}
+
+	public Map<String, Object> getAttributes() {
+		return attributes;
+	}
+	
+	public Object get(String key) {
+		
+		return attributes.get(key);
 	}
 
 

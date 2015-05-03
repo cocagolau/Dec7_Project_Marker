@@ -1,18 +1,10 @@
 package me.dec7.marker.common.aspect.core.template;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import me.dec7.marker.common.aspect.annotation.MarkerAspect;
 import me.dec7.marker.common.aspect.annotation.MarkerAspect.State;
-import me.dec7.marker.common.aspect.annotation.MarkerAspectParam;
-import me.dec7.marker.common.aspect.core.AspectParameter;
 import me.dec7.marker.common.aspect.core.provider.AspectProvider;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -25,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.stereotype.Component;
 
 @Aspect
@@ -44,46 +35,14 @@ public class AspectTemplate implements ApplicationContextAware {
 		Object returnVal = null;
 		AspectProvider provider = null;
 		
+		final List<State> states = Arrays.asList(annotation.state());
+		final boolean ALL = states.contains(State.ALL);
+		
 		final Class<? extends AspectProvider> clazz = annotation.provider();
 		provider = applicationContext.getBean(clazz);
 		
-		
-//		final Class<? extends AspectProvider> clazz = annotation.provider();
-//		provider = applicationContext.getBean(clazz);
-		
-		final List<State> states = Arrays.asList(annotation.state());
-		final boolean ALL = states.contains(State.ALL);
-//		final Map<String, Object> attributes = new HashMap<String, Object>();
-//		final List<String> targetNames = new ArrayList<String>();
-		
-		// parameters' name of a method
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
 		AspectParameterStore store = new AspectParameterStore(signature.getMethod());
-		
-//		Parameter[] parameters = method.getParameters();
-//		Class<?>[] parameterTypes = method.getParameterTypes();
-		
-		
-		
-//		// spring에서 제공하는 DefaultParameterNameDiscoverer 사용하여 method의 parameter 이름 가져옴
-//		DefaultParameterNameDiscoverer discoverer = new DefaultParameterNameDiscoverer();
-//		String[] paramNames = discoverer.getParameterNames(method);
-//		
-//		// MarkerAspectParam annotation이 존재하는 parameter의 index를 저장
-//		for (int i=0; i<parameters.length; i++) {
-//			Parameter param = parameters[i];
-//			Annotation[] annotations = param.getAnnotations();
-//			
-//			for (Annotation a : annotations) {
-//				if (MarkerAspectParam.class.equals(a.annotationType())) {
-//					String paramName = paramNames[i];
-//					targetNames.add(paramName);
-////					attributes.put(paramName, parameters[i]);
-//
-//					break;
-//				}
-//			}
-//		}
 
 		try {
 			// before status

@@ -1,19 +1,19 @@
 package me.dec7.marker.common.aspect.core.provider;
 
-import java.util.Map;
+import me.dec7.marker.common.aspect.core.template.AspectParameterStore;
 
 public abstract class AbstractAspectProvider implements AspectProvider {
 
 	@Override
-	public void before(Map<String, Object> attributes) { }
+	public void before(AspectParameterStore store) { }
 	
 	@Override
-	public void after(Map<String, Object> attributes) { }
+	public void after(AspectParameterStore store) { }
 
 	@Override
-	public void afterReturning(Map<String, Object> attributes) { }
+	public void afterReturning(AspectParameterStore store) { }
 
 	@Override
-	public void afterThrowing(Map<String, Object> attributes) { }
+	public void afterThrowing(AspectParameterStore store) { }
 
 }

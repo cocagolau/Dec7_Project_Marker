@@ -1,15 +1,23 @@
 package me.dec7.marker.common.aspect.core.provider;
 
-import java.util.Map;
+import me.dec7.marker.common.aspect.core.template.AspectParameterStore;
 
 public interface AspectProvider {
 
-	void before(final Map<String, Object> attributes);
-
-	void after(final Map<String, Object> attributes);
+//	void before(final AspectParameterStore store);
+//
+//	void after(final AspectParameterStore store);
+//	
+//	void afterReturning(final AspectParameterStore store);
+//
+//	void afterThrowing(final AspectParameterStore store);
 	
-	void afterReturning(final Map<String, Object> attributes);
+	void before(final AspectParameterStore store);
 
-	void afterThrowing(final Map<String, Object> attributes);
+	void after(final AspectParameterStore store);
+	
+	void afterReturning(final AspectParameterStore store);
+
+	void afterThrowing(final AspectParameterStore store);
 
 }

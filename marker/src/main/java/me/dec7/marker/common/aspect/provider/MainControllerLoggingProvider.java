@@ -1,8 +1,7 @@
 package me.dec7.marker.common.aspect.provider;
 
-import java.util.Map;
-
 import me.dec7.marker.common.aspect.core.provider.AbstractAspectProvider;
+import me.dec7.marker.common.aspect.core.template.AspectParameterStore;
 import me.dec7.marker.entity.Log;
 import me.dec7.marker.entity.User;
 import me.dec7.marker.service.LogService;
@@ -26,28 +25,28 @@ public class MainControllerLoggingProvider extends AbstractAspectProvider {
 	
 	
 	@Override
-	public void before(Map<String, Object> attributes) {
+	public void before(AspectParameterStore store) {
 		User user = userService.findByEmail("aaaaaaaa@gmail.com");
 		Log log = new Log(user, "MainController aspectj before");
 		logService.insert(log);
 	}
 	
 	@Override
-	public void after(Map<String, Object> attributes) {
+	public void after(AspectParameterStore store) {
 		User user = userService.findByEmail("aaaaaaaa@gmail.com");
 		Log log = new Log(user, "MainController aspectj after");
 		logService.insert(log);
 	}
 
 	@Override
-	public void afterReturning(Map<String, Object> attributes) {
+	public void afterReturning(AspectParameterStore store) {
 		User user = userService.findByEmail("aaaaaaaa@gmail.com");
 		Log log = new Log(user, "MainController aspectj afterReturning");
 		logService.insert(log);
 	}
 
 	@Override
-	public void afterThrowing(Map<String, Object> attributes) {
+	public void afterThrowing(AspectParameterStore store) {
 		User user = userService.findByEmail("aaaaaaaa@gmail.com");
 		Log log = new Log(user, "MainController aspectj afterThrowing");
 		logService.insert(log);
