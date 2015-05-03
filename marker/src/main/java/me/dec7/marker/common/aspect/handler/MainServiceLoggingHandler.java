@@ -1,6 +1,6 @@
-package me.dec7.marker.common.aspect.provider;
+package me.dec7.marker.common.aspect.handler;
 
-import me.dec7.marker.common.aspect.core.provider.AbstractAspectProvider;
+import me.dec7.marker.common.aspect.core.handler.AbstractAspectHandler;
 import me.dec7.marker.common.aspect.core.template.AspectParameterStore;
 
 import org.slf4j.Logger;
@@ -8,9 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MainServiceLoggingProvider extends AbstractAspectProvider {
+public class MainServiceLoggingHandler extends AbstractAspectHandler {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(MainServiceLoggingProvider.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(MainServiceLoggingHandler.class);
 	
 	@Override
 	public void before(AspectParameterStore store) {

@@ -1,8 +1,8 @@
-package me.dec7.marker.common.aspect.core.provider;
+package me.dec7.marker.common.aspect.core.handler;
 
 import me.dec7.marker.common.aspect.core.template.AspectParameterStore;
 
-public abstract class AbstractAspectProvider implements AspectProvider {
+public abstract class AbstractAspectHandler implements AspectHandler {
 
 	@Override
 	public void before(AspectParameterStore store) { }

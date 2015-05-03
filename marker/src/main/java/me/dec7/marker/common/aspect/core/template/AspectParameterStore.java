@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import me.dec7.marker.common.aspect.annotation.MarkerAspectParam;
+import me.dec7.marker.common.aspect.annotation.AspectParam;
 
 import org.springframework.core.DefaultParameterNameDiscoverer;
 
@@ -27,7 +27,7 @@ public class AspectParameterStore {
 
 	private void initMethod(Method joinPointMethod) {
 		if (joinPointMethod == null) {
-			throw new IllegalArgumentException();
+			throw new AspectIllegalArgumentException("method가 null");
 		}
 		
 		Map<String, Object> attributes = new HashMap<String, Object>();
@@ -44,7 +44,7 @@ public class AspectParameterStore {
 			Annotation[] annotations = param.getAnnotations();
 			
 			for (Annotation a : annotations) {
-				if (MarkerAspectParam.class.equals(a.annotationType())) {
+				if (AspectParam.class.equals(a.annotationType())) {
 					String paramName = paramNames[i];
 					targetNames.add(paramName);
 					attributes.put(paramName, methodParams[i]);
@@ -71,8 +71,13 @@ public class AspectParameterStore {
 	}
 	
 	public Object get(String key) {
+		Object result = attributes.get(key);
 		
-		return attributes.get(key);
+		if (result == null) {
+			throw new AspectIllegalArgumentException("존재하는 키가 없습니다.");
+		}
+		
+		return result;
 	}
 
 

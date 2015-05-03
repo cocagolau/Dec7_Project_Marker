@@ -1,5 +1,10 @@
 package me.dec7.marker.security;
 
+import me.dec7.marker.common.aspect.annotation.AspectMethod;
+import me.dec7.marker.common.aspect.annotation.AspectMethod.State;
+import me.dec7.marker.common.aspect.annotation.AspectParam;
+import me.dec7.marker.common.aspect.handler.MainControllerLoggingHandler;
+import me.dec7.marker.common.aspect.handler.MarkerAuthenticationProviderLoggingHandler;
 import me.dec7.marker.entity.User;
 import me.dec7.marker.service.UserService;
 
@@ -18,9 +23,15 @@ public class MarkerAuthenticationProvider implements AuthenticationProvider {
 	private UserService userService;
 	
 	@Override
+	@AspectMethod(
+			state=State.ALL ,
+			handler=MarkerAuthenticationProviderLoggingHandler.class,
+			value="Authenticate")
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
+		@AspectParam
 		String email = (String) authentication.getPrincipal();
+		
 		String password = (String) authentication.getCredentials();
 		
 		User user = userService.findByEmail(email);

@@ -1,8 +1,8 @@
 package me.dec7.marker.web.controller;
 
-import me.dec7.marker.common.aspect.annotation.MarkerAspect;
-import me.dec7.marker.common.aspect.annotation.MarkerAspect.State;
-import me.dec7.marker.common.aspect.provider.MainControllerLoggingProvider;
+import me.dec7.marker.common.aspect.annotation.AspectMethod;
+import me.dec7.marker.common.aspect.annotation.AspectMethod.State;
+import me.dec7.marker.common.aspect.handler.MainControllerLoggingHandler;
 import me.dec7.marker.service.MainService;
 
 import org.slf4j.Logger;
@@ -22,10 +22,10 @@ public class MainController {
 	private MainService mainService;
 
 	@RequestMapping(value = {"","/"}, method = RequestMethod.GET)
-	@MarkerAspect(
-			state=State.ALL ,
-			provider=MainControllerLoggingProvider.class,
-			value="MainController")
+//	@AspectMethod(
+//			state=State.ALL ,
+//			handler=MainControllerLoggingHandler.class,
+//			value="MainController")
 	public String index() {
 		log.debug("In MainController.index");
 		

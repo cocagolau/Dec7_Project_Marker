@@ -3,9 +3,9 @@ package me.dec7.marker.common.aspect.core.template;
 import java.util.Arrays;
 import java.util.List;
 
-import me.dec7.marker.common.aspect.annotation.MarkerAspect;
-import me.dec7.marker.common.aspect.annotation.MarkerAspect.State;
-import me.dec7.marker.common.aspect.core.provider.AspectProvider;
+import me.dec7.marker.common.aspect.annotation.AspectMethod;
+import me.dec7.marker.common.aspect.annotation.AspectMethod.State;
+import me.dec7.marker.common.aspect.core.handler.AspectHandler;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -28,18 +28,17 @@ public class AspectTemplate implements ApplicationContextAware {
 	private ApplicationContext applicationContext;
 	
 	@Pointcut(value = "@annotation(annotation)")
-	public void log(MarkerAspect annotation) { }
+	public void log(AspectMethod annotation) { }
 
 	@Around(value = "log(annotation)")
-	public Object around(ProceedingJoinPoint joinPoint, MarkerAspect annotation) throws Throwable {
+	public Object around(ProceedingJoinPoint joinPoint, AspectMethod annotation) throws Throwable {
 		Object returnVal = null;
-		AspectProvider provider = null;
+		AspectHandler handler = null;
 		
 		final List<State> states = Arrays.asList(annotation.state());
 		final boolean ALL = states.contains(State.ALL);
-		
-		final Class<? extends AspectProvider> clazz = annotation.provider();
-		provider = applicationContext.getBean(clazz);
+		final Class<? extends AspectHandler> handlerClazz = annotation.handler();
+		handler = applicationContext.getBean(handlerClazz);
 		
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
 		AspectParameterStore store = new AspectParameterStore(signature.getMethod());
@@ -47,7 +46,7 @@ public class AspectTemplate implements ApplicationContextAware {
 		try {
 			// before status
 			if (ALL || states.contains(State.BEFORE)) {
-				provider.before(store);
+				handler.before(store);
 			}
 			
 			// exec joinPoint
@@ -57,19 +56,19 @@ public class AspectTemplate implements ApplicationContextAware {
 			} catch (Throwable e) {
 				// afterThrowing status
 				if (ALL || states.contains(State.AFTER_THROWING)) {
-					provider.afterThrowing(store);
+					handler.afterThrowing(store);
 				}
 				throw e;
 			} finally {
 				// after status
 				if (ALL || states.contains(State.AFTER)) {
-					provider.after(store);
+					handler.after(store);
 				}
 			}
 			
 			// afterReturning status
 			if (ALL || states.contains(State.AFTER_RETURNING)) {
-				provider.afterReturning(store);
+				handler.afterReturning(store);
 			}
 
 		} catch (Exception e) {

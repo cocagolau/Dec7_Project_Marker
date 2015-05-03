@@ -1,6 +1,6 @@
-package me.dec7.marker.common.aspect.provider;
+package me.dec7.marker.common.aspect.handler;
 
-import me.dec7.marker.common.aspect.core.provider.AbstractAspectProvider;
+import me.dec7.marker.common.aspect.core.handler.AbstractAspectHandler;
 import me.dec7.marker.common.aspect.core.template.AspectParameterStore;
 import me.dec7.marker.entity.Log;
 import me.dec7.marker.entity.User;
@@ -10,12 +10,10 @@ import me.dec7.marker.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component
-public class MainControllerLoggingProvider extends AbstractAspectProvider {
+public class MarkerAuthenticationProviderLoggingHandler extends AbstractAspectHandler {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(MainControllerLoggingProvider.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(MainControllerLoggingHandler.class);
 	
 	@Autowired
 	private LogService logService;

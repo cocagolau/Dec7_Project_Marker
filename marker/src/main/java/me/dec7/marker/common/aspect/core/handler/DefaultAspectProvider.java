@@ -1,4 +1,4 @@
-package me.dec7.marker.common.aspect.core.provider;
+package me.dec7.marker.common.aspect.core.handler;
 
 import me.dec7.marker.common.aspect.core.template.AspectParameterStore;
 
@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DefaultAspectProvider extends AbstractAspectProvider {
+public class DefaultAspectProvider extends AbstractAspectHandler {
 
 	private static final Logger log = LoggerFactory.getLogger(DefaultAspectProvider.class);
 
