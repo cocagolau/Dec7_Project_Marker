@@ -1,6 +1,5 @@
 package me.dec7.marker.common.aspect.core.template;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,22 +32,18 @@ public class AspectTemplate implements ApplicationContextAware {
 	@Around(value = "log(annotation)")
 	public Object around(ProceedingJoinPoint joinPoint, AspectMethod annotation) throws Throwable {
 		Object returnVal = null;
-		List<AspectHandler> handlers = new ArrayList<AspectHandler>();
+		AspectHandler aspectHandler = null;
 		
 		final List<State> states = Arrays.asList(annotation.state());
 		final boolean ALL = states.contains(State.ALL);
-		final Class<? extends AspectHandler>[] handlerClasses = annotation.handlers();
-		
-		for (int i=0; i<handlerClasses.length; i++) {
-			handlers.add(applicationContext.getBean(handlerClasses[i]));
-		}
-
+		final Class<? extends AspectHandler> handlerClass = annotation.handler();
+		aspectHandler = applicationContext.getBean(handlerClass);
 		AspectParameterStore store = new AspectParameterStore(joinPoint, annotation.value());
 
 		try {
 			// before status
 			if (ALL || states.contains(State.BEFORE)) {
-				execHandlers(State.BEFORE, handlers, store);
+				aspectHandler.before(store);
 			}
 			
 			// exec joinPoint
@@ -58,19 +53,19 @@ public class AspectTemplate implements ApplicationContextAware {
 			} catch (Throwable e) {
 				// afterThrowing status
 				if (ALL || states.contains(State.AFTER_THROWING)) {
-					execHandlers(State.AFTER_THROWING, handlers, store);
+					aspectHandler.afterThrowing(store);
 				}
 				throw e;
 			} finally {
 				// after status
 				if (ALL || states.contains(State.AFTER)) {
-					execHandlers(State.AFTER, handlers, store);
+					aspectHandler.after(store);
 				}
 			}
 			
 			// afterReturning status
 			if (ALL || states.contains(State.AFTER_RETURNING)) {
-				execHandlers(State.AFTER_RETURNING, handlers, store);
+				aspectHandler.afterReturning(store);
 			}
 
 		} catch (Exception e) {
@@ -80,29 +75,6 @@ public class AspectTemplate implements ApplicationContextAware {
 		}
 		
 		return returnVal;
-	}
-
-	private void execHandlers(State state, List<AspectHandler> handlers, AspectParameterStore store) {
-		
-		for (AspectHandler handler : handlers) {
-			switch(state) {
-				case BEFORE :
-					handler.before(store);
-					break;
-				case AFTER :
-					handler.after(store);
-					break;
-				case AFTER_RETURNING :
-					handler.afterReturning(store);
-					break;
-				case AFTER_THROWING :
-					handler.afterThrowing(store);
-					break;
-				default :
-					LOGGER.warn("[" + this.getClass().getName() +"] [AspectHandler] not found handler state");
-					break;
-			}
-		}
 	}
 
 	@Override

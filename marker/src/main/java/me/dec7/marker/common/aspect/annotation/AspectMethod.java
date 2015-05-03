@@ -18,7 +18,7 @@ public @interface AspectMethod {
 	
 	State[] state() default State.ALL ;
 
-	Class<? extends AspectHandler>[] handlers() default DefaultAspectHandler.class;
+	Class<? extends AspectHandler> handler() default DefaultAspectHandler.class;
 
 	String value();
 
