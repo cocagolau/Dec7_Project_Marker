@@ -26,10 +26,10 @@ public class MainController {
 //			state=State.ALL ,
 //			handler=MainControllerLoggingHandler.class,
 //			value="MainController")
-	public String index() {
+	public String index(String content1, String content2) {
 		log.debug("In MainController.index");
 		
-		mainService.printService("hello", "world", mainService);
+		mainService.printService(content1, content2);
 		
 		return "main";
 	}

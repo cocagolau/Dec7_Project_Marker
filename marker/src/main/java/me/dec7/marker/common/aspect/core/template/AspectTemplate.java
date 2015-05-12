@@ -8,8 +8,12 @@ import me.dec7.marker.common.aspect.annotation.AspectMethod.State;
 import me.dec7.marker.common.aspect.core.handler.AspectHandler;
 
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +32,8 @@ public class AspectTemplate implements ApplicationContextAware {
 	
 	@Pointcut(value = "@annotation(annotation)")
 	public void log(AspectMethod annotation) { }
+	
+	
 
 	@Around(value = "log(annotation)")
 	public Object around(ProceedingJoinPoint joinPoint, AspectMethod annotation) throws Throwable {
@@ -40,38 +46,40 @@ public class AspectTemplate implements ApplicationContextAware {
 		aspectHandler = applicationContext.getBean(handlerClass);
 		AspectParameterStore store = new AspectParameterStore(joinPoint, annotation.value());
 
+		// before status
 		try {
-			// before status
 			if (ALL || states.contains(State.BEFORE)) {
 				aspectHandler.before(store);
 			}
+		} catch (Exception e) {
 			
-			// exec joinPoint
-			try {
-				returnVal = joinPoint.proceed();
-				
-			} catch (Throwable e) {
-				// afterThrowing status
-				if (ALL || states.contains(State.AFTER_THROWING)) {
-					aspectHandler.afterThrowing(store);
-				}
-				throw e;
-			} finally {
-				// after status
-				if (ALL || states.contains(State.AFTER)) {
-					aspectHandler.after(store);
-				}
+		}
+		
+		// exec joinPoint
+		try {
+			returnVal = joinPoint.proceed();
+			
+		} catch (Throwable e) {
+			// afterThrowing status
+			if (ALL || states.contains(State.AFTER_THROWING)) {
+				aspectHandler.afterThrowing(store);
 			}
+			throw e;
 			
-			// afterReturning status
+		} finally {
+			// after status
+			if (ALL || states.contains(State.AFTER)) {
+				aspectHandler.after(store);
+			}
+		}
+			
+		// afterReturning status
+		try {
 			if (ALL || states.contains(State.AFTER_RETURNING)) {
 				aspectHandler.afterReturning(store);
 			}
-
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
-			
-			return returnVal;
 		}
 		
 		return returnVal;

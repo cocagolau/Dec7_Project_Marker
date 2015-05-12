@@ -18,7 +18,7 @@ public class MainService {
 //			state=State.ALL ,
 //			handler=MainServiceLoggingHandler.class,
 //			value="MainService")
-	public void printService(@AspectParam String content1, String content2, MainService mainService) {
+	public void printService(@AspectParam String content1, String content2) {
 		log.debug("MainService.printService-content1: " + content1 + ",  content2: " + content2);
 	}
 
