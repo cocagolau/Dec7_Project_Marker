@@ -111,18 +111,18 @@ public class PersistenceConfig {
 		return new LocalValidatorFactoryBean();
 	}
 	
-	@Bean
-	public DataSourceInitializer dataSourceInitializer(DataSource dataSource) {
-		DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
-		dataSourceInitializer.setDataSource(dataSource);
-		
-		ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
-		databasePopulator.addScript(securityInfo);
-		dataSourceInitializer.setDatabasePopulator(databasePopulator);
-		dataSourceInitializer.setEnabled(true);
-		
-		return dataSourceInitializer;
-	}
+//	@Bean
+//	public DataSourceInitializer dataSourceInitializer(DataSource dataSource) {
+//		DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
+//		dataSourceInitializer.setDataSource(dataSource);
+//		
+//		ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
+//		databasePopulator.addScript(securityInfo);
+//		dataSourceInitializer.setDatabasePopulator(databasePopulator);
+//		dataSourceInitializer.setEnabled(true);
+//		
+//		return dataSourceInitializer;
+//	}
 	
 	@Bean
 	public CacheManager cacheManager() {
