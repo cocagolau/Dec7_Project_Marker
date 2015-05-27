@@ -6,8 +6,11 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
+import me.dec7.marker.enums.Gretting;
 import me.dec7.marker.service.MainService;
 
 import org.junit.Before;
@@ -68,6 +71,11 @@ public class MainControllerMockTest {
 		assertThat(actualArgs.get(0), equalTo(HELLO));
 		assertThat(actualArgs.get(1), equalTo(WORLD));
 	
+	}
+	
+	@Test
+	public void test() {
+		new HashSet<Gretting>(Arrays.asList(Gretting.values()));
 	}
 
 }
