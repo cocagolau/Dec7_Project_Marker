@@ -32,8 +32,8 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 @EnableTransactionManagement
 public class PersistenceConfig {
 	
-	@Value("classpath:/scripts/sql/securityInfo.sql")
-	private Resource securityInfo;
+//	@Value("classpath:/scripts/sql/securityInfo.sql")
+//	private Resource securityInfo;
 	
 	@Value("classpath:/ehcache.xml")
 	private Resource ehcache;
@@ -49,7 +49,7 @@ public class PersistenceConfig {
 	private static final String HIBERNATE_HBM2DDL_AUTO = "hibernate.hbm2ddl.auto";
 	private static final String HIBERNATE_DIALECT = "hibernate.dialect";
 	private static final String HIBERNATE_GENERATE_STATISTICS = "hibernate.generate_statistics";
-//	private static final String HIBERNATE_HBM2DDL_IMPORT_FILES = "hibernate.hbm2ddl.import_files";
+	private static final String HIBERNATE_HBM2DDL_IMPORT_FILES = "hibernate.hbm2ddl.import_files";
 
 	private static final String DATABASE_PASSWORD = "database.password";
 	private static final String DATABASE_USERNAME = "database.username";
@@ -99,7 +99,7 @@ public class PersistenceConfig {
 		jpaProperties.put(HIBERNATE_CACHE_USE_QUERY_CACHE, env.getRequiredProperty(HIBERNATE_CACHE_USE_QUERY_CACHE));
 		
 		// init database
-//		jpaProperties.put(HIBERNATE_HBM2DDL_IMPORT_FILES, "/scripts/sql/initSecurity.sql");
+		jpaProperties.put(HIBERNATE_HBM2DDL_IMPORT_FILES, "/scripts/sql/initSecurity.sql");
 
 		entityManagerFactoryBean.setJpaProperties(jpaProperties);
 
