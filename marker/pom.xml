@@ -81,29 +81,6 @@
 			<version>${ch.qos.logback.version}</version>
 		</dependency>
 
-		<!-- junit -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-			<scope>test</scope>
-		</dependency>
-		
-		<!-- mockito -->
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-			<version>${org.mockito.version}</version>
-		</dependency>
-		
-		<!-- hamcrest -->
-		<dependency>
-			<groupId>org.hamcrest</groupId>
-			<artifactId>hamcrest-all</artifactId>
-			<version>${org.hamcrest.version}</version>
-			<scope>test</scope>
-		</dependency>
-
 		<!-- database -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -155,12 +132,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${org.springframework.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -358,6 +329,40 @@
 			<version>${org.freemarker.version}</version>
 		</dependency>
 		
+		<!-- CGLib -->
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>${cglib.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		
+		
+		<!-- test -->
+		<!-- junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<!-- mockito -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>${org.mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<!-- hamcrest -->
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-all</artifactId>
+			<version>${org.hamcrest.version}</version>
+			<scope>test</scope>
+		</dependency>
 		<!-- dbunit -->
 		<dependency>
 			<groupId>org.dbunit</groupId>
@@ -371,14 +376,14 @@
 			<version>${com.github.springtestdbunit.version}</version>
 			<scope>test</scope>
 		</dependency>
-		
-		<!-- CGLib -->
 		<dependency>
-			<groupId>cglib</groupId>
-			<artifactId>cglib</artifactId>
-			<version>${cglib.version}</version>
-			<scope>compile</scope>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${org.springframework.version}</version>
+			<scope>test</scope>
 		</dependency>
+		
+		
 		
 	</dependencies>
 
