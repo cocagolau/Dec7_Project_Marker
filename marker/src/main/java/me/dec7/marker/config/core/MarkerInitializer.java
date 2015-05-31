@@ -8,7 +8,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
 
 import me.dec7.marker.config.marker.AppConfig;
-import me.dec7.marker.filter.SiteMeshFilter;
+import me.dec7.marker.support.filter.SiteMeshFilter;
 
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.web.WebApplicationInitializer;

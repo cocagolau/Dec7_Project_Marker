@@ -1,13 +1,11 @@
 package me.dec7.marker.config.core;
 
-import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -27,8 +25,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 		}
 )
 @Import({ WebSocketConfig.class })
-@EnableGlobalMethodSecurity(prePostEnabled=true, securedEnabled = true, proxyTargetClass=true, mode=AdviceMode.ASPECTJ)
-@EnableAspectJAutoProxy(proxyTargetClass=true)
+@EnableGlobalMethodSecurity(prePostEnabled=true, securedEnabled = true)
 public class WebConfig extends WebMvcConfigurerAdapter {
 
 	@Bean

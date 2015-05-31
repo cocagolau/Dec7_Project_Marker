@@ -10,7 +10,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
-import me.dec7.marker.enums.Gretting;
+import me.dec7.marker.common.enums.Gretting;
+import me.dec7.marker.controller.web.MainController;
 import me.dec7.marker.service.MainService;
 
 import org.junit.Before;

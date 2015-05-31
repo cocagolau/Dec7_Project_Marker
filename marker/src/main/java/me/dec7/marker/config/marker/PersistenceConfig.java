@@ -14,6 +14,7 @@ import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -27,15 +28,17 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Configuration
 @EnableCaching
-@PropertySource(value = "classpath:application-properties.xml")
 @EnableJpaRepositories(basePackages = {"**.entity", "**.repository"})
+@PropertySources({
+	@PropertySource(value = "classpath:database/config.xml"),
+})
 @EnableTransactionManagement
 public class PersistenceConfig {
 	
-//	@Value("classpath:/scripts/sql/securityInfo.sql")
-//	private Resource securityInfo;
+	@Value("classpath:/META-INF/init-data/security-info.sql")
+	private Resource securityInfo;
 	
-	@Value("classpath:/ehcache.xml")
+	@Value("classpath:/META-INF/ehcache.xml")
 	private Resource ehcache;
 
 	private static final String PERSISTENCE_PACKAGE = "**.entity";
@@ -49,7 +52,6 @@ public class PersistenceConfig {
 	private static final String HIBERNATE_HBM2DDL_AUTO = "hibernate.hbm2ddl.auto";
 	private static final String HIBERNATE_DIALECT = "hibernate.dialect";
 	private static final String HIBERNATE_GENERATE_STATISTICS = "hibernate.generate_statistics";
-	private static final String HIBERNATE_HBM2DDL_IMPORT_FILES = "hibernate.hbm2ddl.import_files";
 
 	private static final String DATABASE_PASSWORD = "database.password";
 	private static final String DATABASE_USERNAME = "database.username";
@@ -97,9 +99,6 @@ public class PersistenceConfig {
 		jpaProperties.put(HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE, env.getRequiredProperty(HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
 		jpaProperties.put(HIBERNATE_CACHE_REGION_FACTORY_CLASS, env.getRequiredProperty(HIBERNATE_CACHE_REGION_FACTORY_CLASS));
 		jpaProperties.put(HIBERNATE_CACHE_USE_QUERY_CACHE, env.getRequiredProperty(HIBERNATE_CACHE_USE_QUERY_CACHE));
-		
-		// init database
-		jpaProperties.put(HIBERNATE_HBM2DDL_IMPORT_FILES, "/scripts/sql/initSecurity.sql");
 
 		entityManagerFactoryBean.setJpaProperties(jpaProperties);
 
@@ -111,18 +110,18 @@ public class PersistenceConfig {
 		return new LocalValidatorFactoryBean();
 	}
 	
-//	@Bean
-//	public DataSourceInitializer dataSourceInitializer(DataSource dataSource) {
-//		DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
-//		dataSourceInitializer.setDataSource(dataSource);
-//		
-//		ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
-//		databasePopulator.addScript(securityInfo);
-//		dataSourceInitializer.setDatabasePopulator(databasePopulator);
-//		dataSourceInitializer.setEnabled(true);
-//		
-//		return dataSourceInitializer;
-//	}
+	@Bean
+	public DataSourceInitializer dataSourceInitializer(DataSource dataSource) {
+		DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
+		dataSourceInitializer.setDataSource(dataSource);
+		
+		ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
+		databasePopulator.addScript(securityInfo);
+		dataSourceInitializer.setDatabasePopulator(databasePopulator);
+		dataSourceInitializer.setEnabled(true);
+		
+		return dataSourceInitializer;
+	}
 	
 	@Bean
 	public CacheManager cacheManager() {
