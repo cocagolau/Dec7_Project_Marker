@@ -21,7 +21,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 
 @Entity
-@Table(name="roles")
+@Table(name="ROELS")
 @Cache(region = "role", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Role implements Serializable {
 	

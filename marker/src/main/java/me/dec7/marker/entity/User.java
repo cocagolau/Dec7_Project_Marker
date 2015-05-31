@@ -29,7 +29,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-@Table(name="users")
+@Table(name="USERS")
 @Cache(region = "user", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User implements Serializable, UserDetails{
 	
@@ -59,7 +59,7 @@ public class User implements Serializable, UserDetails{
 	private Date modifyDate;
 	
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "user_roles", 
+	@JoinTable(name = "USER_ROLES", 
 		joinColumns = { @JoinColumn(name = "user_id", referencedColumnName="id", nullable = false, updatable = false) }, 
 		inverseJoinColumns = { @JoinColumn(name = "role_id", referencedColumnName="id", nullable = false, updatable = false) })
 	private Set<Role> roles = new HashSet<Role>(0);
