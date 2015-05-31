@@ -23,7 +23,7 @@
 	<entry key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory</entry>
 	
 	<!-- enable second level cache and query cache -->
-	<entry key="hibernate.cache.use_second_level_cache">false</entry>
-	<entry key="hibernate.cache.use_query_cache">false</entry>
+	<entry key="hibernate.cache.use_second_level_cache">true</entry>
+	<entry key="hibernate.cache.use_query_cache">true</entry>
 	
 </properties>

@@ -38,7 +38,7 @@ public class PersistenceConfig {
 	@Value("classpath:/META-INF/init-data/security-info.sql")
 	private Resource securityInfo;
 	
-	@Value("classpath:/META-INF/ehcache.xml")
+	@Value("classpath:ehcache.xml")
 	private Resource ehcache;
 
 	private static final String PERSISTENCE_PACKAGE = "**.entity";
