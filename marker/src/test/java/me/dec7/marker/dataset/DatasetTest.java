@@ -32,7 +32,7 @@ public class DatasetTest {
 	private UserRepository repository;
 	
 	@Test
-	@DatabaseSetup("dataset.xml")
+	@DatabaseSetup("classpath:dataset/dataset.xml")
 	//@ExpectedDatabase("expectedData.xml")
 	public void findByName_Dec7() {
 //		User user = repository.findByEmail("dec7");
