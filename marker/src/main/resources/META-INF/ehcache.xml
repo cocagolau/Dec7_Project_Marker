@@ -2,7 +2,9 @@
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
 	updateCheck="false">
-	<diskStore path="Users/dec7/apps/caches" />
+	<!-- <diskStore path="Users/dec7/apps/caches" /> -->
+	<!-- <diskStore path="${cache.basedir}" /> -->
+	<diskStore path="$HOME/caches" />
 
 	<defaultCache eternal="false" overflowToDisk="false"
 		maxElementsInMemory="50000" timeToIdleSeconds="30" timeToLiveSeconds="6000"
