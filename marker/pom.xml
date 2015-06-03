@@ -4,7 +4,7 @@
 	<groupId>me.dec7</groupId>
 	<artifactId>marker</artifactId>
 	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>Marker Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<properties>
@@ -55,7 +55,15 @@
 		<plugin.maven.war.version>2.4</plugin.maven.war.version>
 		<plugin.maven.eclipse.version>2.9</plugin.maven.eclipse.version>
 		<plugin.maven.compiler.version>3.1</plugin.maven.compiler.version>
-
+		
+		<!-- frontend maven -->
+		<plugin.exec-maven.version>1.4.0</plugin.exec-maven.version>
+		<frontend-maven.version>0.0.23</frontend-maven.version>
+		<node.version>v0.10.18</node.version>
+		<npm.version>1.3.8</npm.version>
+	
+		<!-- wtp context root -->
+		<m2eclipse.wtp.contextRoot>/</m2eclipse.wtp.contextRoot>
 		<dir.scripts>${basedir}/webapp/WEB-INF/scripts</dir.scripts>
 	</properties>
 
@@ -415,6 +423,39 @@
 				<directory>src/test/resources-${env}</directory>
 			</testResource>
 		</testResources>
+		
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>com.github.eirslett</groupId>
+										<artifactId>frontend-maven-plugin</artifactId>
+										<versionRange>[0.0.23,)</versionRange>
+										<goals>
+											<goal>npm</goal>
+											<goal>bower</goal>
+											<goal>grunt</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<execute>
+											<runOnIncremental>false</runOnIncremental>
+										</execute>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 
 		<plugins>
 			<!-- webapp -->
@@ -449,6 +490,59 @@
 					<target>1.8</target>
 					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
+			</plugin>
+			
+			<!-- frontend tools -->
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>${frontend-maven.version}</version>
+				<configuration>
+					<workingDirectory>.</workingDirectory>
+				</configuration>
+
+				<executions>
+					<execution>
+						<id>install node and npm</id>
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+						<configuration>
+							<nodeVersion>${node.version}</nodeVersion>
+							<npmVersion>${npm.version}</npmVersion>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>npm install</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<arguments>install</arguments>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>bower install</id>
+						<goals>
+							<goal>bower</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<arguments>install</arguments>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>grunt build</id>
+						<goals>
+							<goal>grunt</goal>
+						</goals>
+						<phase>generate-resources</phase>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

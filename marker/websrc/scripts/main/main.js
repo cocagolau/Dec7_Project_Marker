@@ -5,9 +5,9 @@
 // Their usage will become more apparent futher along in the tutorial.
 require.config({
 	paths : {
-		jquery : '/scripts/libs/jquery/1.11.2/jquery-min',
-		underscore : '/scripts/libs/underscore/1.8.3/underscore-min',
-		backbone : '/scripts/libs/backbone/1.1.2/backbone-min',
+		jquery : '/scripts/vendor/jquery/jquery',
+		underscore : '/scripts/vendor/underscore/underscore',
+		backbone : '/scripts/vendor/backbone/backbone',
 		templates : '/templates'
 	}
 

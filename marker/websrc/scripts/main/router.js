@@ -54,6 +54,7 @@ function($, _, Backbone, HomeView, ProjectsView, ContributorsView, FooterView) {
 
 		Backbone.history.start();
 	};
+	
 	return {
 		initialize : initialize
 	};

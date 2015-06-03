@@ -1,0 +1,23 @@
+{
+  "name": "marker",
+  "version": "1.0.0",
+  "homepage": "https://github.com/cocagolau/Dec7_Project_Marker",
+  "authors": [
+    "cocagolau <cocagolau@gmail.com>"
+  ],
+  "description": "marker desc",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "1.11.3",
+    "requirejs": "~2.1.18",
+    "underscore": "~1.8.3",
+    "backbone": "~1.2.0"
+  }
+}

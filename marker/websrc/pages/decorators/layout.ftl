@@ -7,7 +7,7 @@
 	
 	<sitemesh:write property='head' />
 	
-	<script data-main="/scripts/main/main" src="/scripts/libs/require/2.1.17/require-min.js"></script>
+	<script data-main="/scripts/main/main" src="/scripts/vendor/requirejs/require.js"></script>
 </head>
 
 <body>
