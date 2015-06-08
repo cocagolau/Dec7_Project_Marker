@@ -62,7 +62,7 @@ public class User implements Serializable, UserDetails{
 	@JoinTable(name = "user_roles", 
 		joinColumns = { @JoinColumn(name = "user_id", referencedColumnName="id", nullable = false, updatable = false) }, 
 		inverseJoinColumns = { @JoinColumn(name = "role_id", referencedColumnName="id", nullable = false, updatable = false) })
-	private Set<Role> roles = new HashSet<Role>(0);
+	private Set<RoleTable> roles = new HashSet<RoleTable>(0);
 	
 	public User() { }
 	public User(String email, String password) {
@@ -107,10 +107,10 @@ public class User implements Serializable, UserDetails{
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
 	}
-	public Set<Role> getRoles() {
+	public Set<RoleTable> getRoles() {
 		return roles;
 	}
-	public void setRoles(Set<Role> roles) {
+	public void setRoles(Set<RoleTable> roles) {
 		this.roles = roles;
 	}
 	
@@ -122,9 +122,9 @@ public class User implements Serializable, UserDetails{
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Collection<GrantedAuthority> authorities = new ArrayList<>();
-		Set<Role> roles = this.getRoles();
+		Set<RoleTable> roles = this.getRoles();
 		if (roles != null) {
-			for (Role role : roles) {
+			for (RoleTable role : roles) {
 				SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getName());
 				authorities.add(authority);
 			}

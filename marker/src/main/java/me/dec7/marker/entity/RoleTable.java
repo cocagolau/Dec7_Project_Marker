@@ -23,7 +23,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name="roles")
 @Cache(region = "role", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Role implements Serializable {
+public class RoleTable implements Serializable {
 	
 	private static final long serialVersionUID = -2783423968449192567L;
 

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>social-properties</comment>
+
+	<!-- Database -->
+	<entry key="social.facebook.app-key">0000</entry>
+	<entry key="social.facebook.app-secret">0000</entry>
+</properties>

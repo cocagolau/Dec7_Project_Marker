@@ -17,10 +17,6 @@ public class MarkerAuthenticationProvider implements AuthenticationProvider {
 	@Autowired
 	private UserService userService;
 	
-//	@AspectMethod(
-//		state=State.ALL ,
-//		handler=MarkerAuthenticationProviderLoggingHandler.class,
-//		value="MarkerAuthenticationProvider")
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String email = (String) authentication.getPrincipal();

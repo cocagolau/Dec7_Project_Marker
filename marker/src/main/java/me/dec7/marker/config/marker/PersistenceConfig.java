@@ -38,6 +38,9 @@ public class PersistenceConfig {
 	@Value("classpath:/META-INF/init-data/security-info.sql")
 	private Resource securityInfo;
 	
+	@Value("classpath:/META-INF/init-data/account-data.sql")
+	private Resource accountData;
+	
 	@Value("classpath:ehcache.xml")
 	private Resource ehcache;
 
@@ -117,6 +120,7 @@ public class PersistenceConfig {
 		
 		ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
 		databasePopulator.addScript(securityInfo);
+		databasePopulator.addScript(accountData);
 		dataSourceInitializer.setDatabasePopulator(databasePopulator);
 		dataSourceInitializer.setEnabled(true);
 		
