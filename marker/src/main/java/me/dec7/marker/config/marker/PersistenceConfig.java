@@ -28,7 +28,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Configuration
 @EnableCaching
-@EnableJpaRepositories(basePackages = {"**.entity", "**.repository"})
+@EnableJpaRepositories(basePackages = {"**.repository"})
 @PropertySources({
 	@PropertySource(value = "classpath:database/config.xml"),
 })
@@ -41,7 +41,7 @@ public class PersistenceConfig {
 	@Value("classpath:ehcache.xml")
 	private Resource ehcache;
 
-	private static final String PERSISTENCE_PACKAGE = "**.entity";
+	private static final String PERSISTENCE_PACKAGE = "**.domain";
 	private static final String HIBERNATE_CACHE_USE_QUERY_CACHE = "hibernate.cache.use_query_cache";
 	private static final String HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = "hibernate.cache.use_second_level_cache";
 	private static final String HIBERNATE_CACHE_REGION_FACTORY_CLASS = "hibernate.cache.region.factory_class";

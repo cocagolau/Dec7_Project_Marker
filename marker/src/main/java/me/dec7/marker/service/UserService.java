@@ -1,6 +1,6 @@
 package me.dec7.marker.service;
 
-import me.dec7.marker.entity.User;
+import me.dec7.marker.domain.User;
 import me.dec7.marker.repository.UserRepository;
 
 import org.slf4j.Logger;

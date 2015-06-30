@@ -1,4 +1,4 @@
-package me.dec7.marker.entity;
+package me.dec7.marker.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;

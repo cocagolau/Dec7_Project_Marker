@@ -1,15 +1,18 @@
 package me.dec7.marker.config.marker;
 
-import me.dec7.marker.support.security.MarkerAuthenticationProvider;
+import me.dec7.marker.social_security.MarkerAuthenticationProvider;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -48,10 +51,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	
 
-//	private PasswordEncoder passwordEncoder() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		
+//		return new ShaPasswordEncoder(256);
+		return new StandardPasswordEncoder();
+	}
 
 	@Bean
 	@Override

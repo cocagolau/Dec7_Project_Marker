@@ -3,7 +3,7 @@ package me.dec7.marker.dataset;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import me.dec7.marker.config.marker.PersistenceConfig;
-import me.dec7.marker.entity.User;
+import me.dec7.marker.domain.User;
 import me.dec7.marker.repository.UserRepository;
 
 import org.junit.Test;

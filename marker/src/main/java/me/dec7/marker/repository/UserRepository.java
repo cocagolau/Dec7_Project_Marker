@@ -1,6 +1,6 @@
 package me.dec7.marker.repository;
 
-import me.dec7.marker.entity.User;
+import me.dec7.marker.domain.User;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

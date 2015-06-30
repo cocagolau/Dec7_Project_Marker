@@ -1,6 +1,6 @@
-package me.dec7.marker.support.security;
+package me.dec7.marker.social_security;
 
-import me.dec7.marker.entity.User;
+import me.dec7.marker.domain.User;
 import me.dec7.marker.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +17,6 @@ public class MarkerAuthenticationProvider implements AuthenticationProvider {
 	@Autowired
 	private UserService userService;
 	
-//	@AspectMethod(
-//		state=State.ALL ,
-//		handler=MarkerAuthenticationProviderLoggingHandler.class,
-//		value="MarkerAuthenticationProvider")
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String email = (String) authentication.getPrincipal();
